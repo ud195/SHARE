@@ -7,7 +7,8 @@ The project contains the following functionalities up to now:
 1. Separated pages for UI design (.jsx) based on react.
 2. Routing so now you can access multiple pages through links (react-router).
 
-To Run the project locally install 
+To Run the project locally follow these steps:
+
 1. Meteor from https://www.meteor.com/install
 2. Open Command prompt as admin 
 3. Navigate to the project path for example >cd c:/users/username/project/share
