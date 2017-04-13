@@ -17,3 +17,9 @@ To Run the project locally follow these steps:
 6. Access through localhost:3000
 7. Access sub-pages through localhost:3000/pagename (as of now pagenames are: login, register and home)
 
+------ Dependencies up to now -------
+
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-router": "^4.1.0",
+    "react-router-dom": "^4.1.0"
