@@ -12,7 +12,7 @@ class HomePage extends React.Component {
          <header>
          <div>
           That's the home page it's very ugly !!
-          </div>
+         </div>
          <div>
          <button > Take me somewhere else </button>
          <li><Link to="/login">login</Link></li>
