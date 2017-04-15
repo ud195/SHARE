@@ -5,7 +5,7 @@ import {
   BrowserRouter as Router,
   Route,
   Link
-} from 'react-router-dom'
+} from 'react-router-dom';
 
 import Home from '../imports/ui/HomePage.jsx';
 import Login from '../imports/ui/LoginPage.jsx';
@@ -19,7 +19,7 @@ Meteor.startup( () => {
       <Route exact path="/" component={Home}/>
       <Route exact path="/register" component={Register}/>
       <Route path="/login" component={Login}/>
-      </div>
+    </div>
  </Router> , document.getElementById('render-home')
   );
 });
