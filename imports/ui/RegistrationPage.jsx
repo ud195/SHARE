@@ -16,6 +16,7 @@ class RegistrationPage extends React.Component {
        console.log(this.state);
     let { user } = this.state;
     return (
+
       <Form horizontal>
         <FormGroup controlId="formHorizontalFirstName">
           <Col componentClass={ControlLabel} sm={2}>
@@ -107,7 +108,6 @@ class RegistrationPage extends React.Component {
     let user = Object.assign({}, user, { password });
     this.setState({ user });
   }
-
   onsubmit(e) {
     
   }

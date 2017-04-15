@@ -1,11 +1,16 @@
 PROJECT SHARE 
 
+
+
 This is a fresh project for our web app. uploaded on 13/04/17
 
 The project contains the following functionalities up to now:
 
 1. Separated pages for UI design (.jsx) based on react.
 2. Routing so now you can access multiple pages through links (react-router).
+3. Added some sample forms and a navigation bar. 
+4. Data from forms can be captured.
+5. Added states for form data.
 
 To Run the project locally follow these steps:
 
