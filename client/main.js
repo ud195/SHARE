@@ -5,7 +5,7 @@ import {
   BrowserRouter as Router,
   Route,
   Link
-} from 'react-router-dom'
+} from 'react-router-dom';
 
 import Home from '../imports/ui/HomePage.jsx';
 import Login from '../imports/ui/LoginPage.jsx';

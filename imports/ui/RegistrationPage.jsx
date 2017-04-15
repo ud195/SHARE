@@ -3,7 +3,7 @@ import { Col, Form, FormGroup, FormControl, ControlLabel, FieldGroup, Button } f
 
 class RegistrationPage extends React.Component {
 
-constructor(props) {
+  constructor(props) {
     super(props);
 
     this.state =
@@ -63,7 +63,6 @@ constructor(props) {
           </Col>
         </FormGroup>
 
-
         <FormGroup>
           <Col smOffset={2} sm={6}>
             <Button bsStyle="primary" type="submit">
@@ -108,6 +107,9 @@ constructor(props) {
     this.setState({ password: password });
     let user = Object.assign({}, user, { password });
     this.setState({ user });
+  }
+  onsubmit(e) {
+    
   }
 
 }
