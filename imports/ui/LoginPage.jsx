@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormGroup, FormControl, ControlLabel, ButtonToolbar, Button } from "bootstrap";
+import { FormGroup, FormControl, ControlLabel, ButtonToolbar, Button } from "react-bootstrap";
 import {
   BrowserRouter as Router,
   Route,
