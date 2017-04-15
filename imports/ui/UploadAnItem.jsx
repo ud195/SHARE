@@ -1,9 +1,8 @@
 import React from 'react';
-
+import { createContainer } from 'meteor/react-meteor-data';
+import { ItemCollection } from '../collections/items.js';
 
 class UploadItemPage extends React.Component {
-
-
 
   constructor(props) 
   {
@@ -41,12 +40,15 @@ class UploadItemPage extends React.Component {
       var Price = this.state.ItemPrice;
       var Owner = this.state.ItemOwner;
       var Status = this.state.ItemStatus;
-      
+      date = new Date();
     console.log("Name: " + this.state.ItemName);
     console.log("Description: " + this.state.ItemDescription);
     console.log("Price: " + this.state.ItemPrice);
     console.log("Owner: " + this.state.ItemOwner);
     console.log("Status: " + this.state.ItemStatus);
+
+    ItemCollection.insert({Name,Description,Price,Owner,Status,date});
+    
 }
 
    render() {
@@ -90,6 +92,7 @@ class UploadItemPage extends React.Component {
              <button onClick = {this.handleSubmit}>Submit |O|</button>
          </div>
          </div>
+   
          );
         }
 }

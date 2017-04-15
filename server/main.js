@@ -1,4 +1,6 @@
 import { Meteor } from 'meteor/meteor';
+import '../imports/collections/items.js';
+
 
 
 Meteor.startup(() => {
