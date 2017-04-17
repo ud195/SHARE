@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormGroup, FormControl, ControlLabel, ButtonToolbar, Button } from "react-bootstrap";
 import {
   BrowserRouter as Router,
   Route,
@@ -15,10 +14,6 @@ class LoginPage extends React.Component {
            <form>
              <input type="text" />
              </form>
-             <ButtonToolbar>
-              <Button bsStyle="primary">Default button</Button>
-              <Button>Default button</Button>
-            </ButtonToolbar>
          </div>
          <div>
          <li><Link to="/home">register</Link></li>

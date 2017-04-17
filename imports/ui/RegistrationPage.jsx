@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Form, FormGroup, FormControl, ControlLabel, FieldGroup, Button } from "react-bootstrap";
+import {Form, FormGroup, FormControl } from 'semantic-ui-react'
 
 class RegistrationPage extends React.Component {
 
