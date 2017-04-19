@@ -13,6 +13,13 @@ import Register from '../imports/ui/RegistrationPage.jsx';
 import ItemPage from '../imports/ui/UploadAnItem.jsx';
 import ItemManagementPage from '../imports/manage/ItemAPI.jsx';
 import HeadnavBar from '../imports/ui/HeadNavBar.jsx';
+import HomeItemGrid from '../imports/ui/HomeItemGrid.jsx';
+import developers from '../imports/ui/Developers.jsx';
+import ViewAllItems from '../imports/ui/ViewAllItems.jsx';
+import FooterNavBar from '../imports/ui/FooterNavBar.jsx';
+import Chat from '../imports/ui/Chat.jsx';
+import ContactUs from '../imports/ui/ContactUs.jsx';
+
 
 Meteor.startup( () => {
   render(
@@ -25,6 +32,14 @@ Meteor.startup( () => {
       <Route path ="/login" component={Login}/>
       <Route path = "/uploaditem" component={ItemPage}/>
       <Route path = "/manageitem" component={ItemManagementPage}/>
+      <Route path = "/itemgrid" component={HomeItemGrid}/>
+      <Route path = "/developers" component={developers}/>
+      <Route path = "/viewall" component={ViewAllItems}/>
+      <Route path = "/chat" component={Chat}/>
+      <Route path = "/contactus" component={ContactUs}/>
+
+      <Route exact path="" component={FooterNavBar}/>
+
       </div>
  </Router> , document.getElementById('render-home')
   );
