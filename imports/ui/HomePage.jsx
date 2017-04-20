@@ -5,7 +5,7 @@ import {
   Link
 } from 'react-router-dom'
 
-import { Segment, Rail } from 'semantic-ui-react';
+import { Segment, Rail, Grid } from 'semantic-ui-react';
 import ItemGrid from '../ui/HomeItemGrid.jsx';
 import HomeSideMenu from '../ui/HomeSideMenu.jsx';
 import HomeSearchBar from '../ui/HomeSearchBar.jsx';
@@ -20,14 +20,18 @@ class HomePage extends React.Component {
           <Segment inverted color ='blue' compact raised>
           <HomeSearchBar />
           </Segment>
-          <Segment.Group horizontal>
-          <Segment>
-          <HomeSideMenu/>
-          </Segment>
-          <Segment>
-          <ItemGrid/>          
-          </Segment>
-          </Segment.Group>
+          
+            <Grid columns={2}>
+            <Grid.Row>
+              <Grid.Column width={4} >
+                  <HomeSideMenu/>
+              </Grid.Column>
+              <Grid.Column width={12} floated='right'>
+                  <ItemGrid/>          
+              </Grid.Column>
+            </Grid.Row>
+            </Grid>
+
           </Segment.Group>
         </div>
       );

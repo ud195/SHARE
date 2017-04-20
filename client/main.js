@@ -19,7 +19,7 @@ import ViewAllItems from '../imports/ui/ViewAllItems.jsx';
 import FooterNavBar from '../imports/ui/FooterNavBar.jsx';
 import Chat from '../imports/ui/Chat.jsx';
 import ContactUs from '../imports/ui/ContactUs.jsx';
-
+import Comment from '../imports/manage/MessageAPI.jsx';
 
 Meteor.startup( () => {
   render(
@@ -37,7 +37,7 @@ Meteor.startup( () => {
       <Route path = "/viewall" component={ViewAllItems}/>
       <Route path = "/chat" component={Chat}/>
       <Route path = "/contactus" component={ContactUs}/>
-
+      <Route path = "/comment" component={Comment}/>
       <Route exact path="" component={FooterNavBar}/>
 
       </div>

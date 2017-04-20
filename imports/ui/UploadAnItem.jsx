@@ -1,7 +1,7 @@
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { ItemCollection } from '../collections/items.js';
-import { Header, Message, Card, Input, Icon, Image, Button, Divider, Form, Segment } from 'semantic-ui-react'
+import { Modal, Header, Message, Card, Input, Icon, Image, Button, Divider, Form, Segment } from 'semantic-ui-react'
 
 class UploadItemPage extends React.Component {
 
@@ -51,7 +51,6 @@ class UploadItemPage extends React.Component {
     console.log("Condition: " + this.state.Condition);
 
     ItemCollection.insert({Name, Description, Price, Owner, Condition});
-    
 }
 
    render() {
@@ -104,7 +103,21 @@ class UploadItemPage extends React.Component {
            </Form.Field>   
           </Form>
           <Divider hidden/>
-          <Button icon='send' color='blue' content='Submit' onClick = {this.handleSubmit}/>
+           <Modal size='small' dimmer='inverted' color='blue' trigger={  
+          <Button size='large' icon='send' color='blue' content='Submit' 
+          onClick = {this.handleSubmit}/>
+          }>
+          <Modal.Header textAlign='center'>
+            <Header as='h2' icon>
+              <Icon name='send' />
+              Upload an item
+              <Header.Subheader>
+                Your item has been uploaded.
+              </Header.Subheader>
+            </Header>
+          </Modal.Header>
+          </Modal>
+        
           </Segment>
           
           <Segment basic  compact floated='right' textAlign='center'>

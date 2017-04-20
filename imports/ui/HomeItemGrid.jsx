@@ -19,14 +19,14 @@ class ItemGrid extends React.Component {
       render() {
             return (
             <div>
-            <Segment compact inverted >
+            <Segment compact >
                   <Header as='h2'>
            <Icon name='star' />
             <Header.Content>
               Featured Items
             </Header.Content>
           </Header>
-            <CardGroup compact color='blue'>
+            <CardGroup fluid >
             {this.renderItemsList()}
             </CardGroup>
             </Segment>

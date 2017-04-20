@@ -58,7 +58,6 @@ class HeadNavBar extends React.Component {
    render() {
       return (
                <header>
-                <Segment size='huge' raised>
                  <Menu size='huge' color={'green'} inverted widths={7}>
                   <Menu.Item name='Home'  onClick={this.RedirectHome}  >
                    <Icon name='home' />
@@ -92,7 +91,6 @@ class HeadNavBar extends React.Component {
                     Item Grid
                   </Menu.Item>
                  </Menu>
-                </Segment>
                </header>
       );
    }
