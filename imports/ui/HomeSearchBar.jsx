@@ -6,57 +6,49 @@ import { ItemCollection } from '../collections/items.js';
 
 import Item from '../objects/ItemCardFull.jsx';
 
-class HomeSearchBar extends React.Component {
+export default class HomeSearchBar extends React.Component {
 
-  constructor(props) 
-  {
+  constructor(props) {
     super(props);
 
-    this.state = 
-    {
-      searchterm : ''
-    }
-
-      this.updateStateSearchTerm = this.updateStateSearchTerm.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
+    this.state =
+      {
+        searchterm: ''
+      }
   };
 
-      updateStateSearchTerm(event)        {this.setState({ searchterm: event.target.value});}
+  updateStateSearchTerm(event) { this.setState({ searchterm: event.target.value }); }
 
-      handleSubmit()
-      {
-        console.log("Searchterm: " + this.state.searchterm);
-        console.log(global);
-      }
 
-      renderResults ()
-      {
-            return this.props.items.map((item) => (
-            <Item key={item._id} item={item} />
-      ));}
 
-   
+  renderResults() {
+    let term = this.state.searchterm.trim();
+    console.log("Searchterm: " + term);
 
-      render() {
-            return (
-                  <div>
-                        <Input size='large' icon={<Icon name='search'  circular link />} placeholder='Search...' value = {this.state.searchterm} onChange = {this.updateStateSearchTerm} />                  
-                        <Modal trigger={<Button size='large' onClick={this.handleSubmit}> Search </Button>}>
-                        <Modal.Header>You searched for : {this.state.searchterm}</Modal.Header>
-                        <Modal.Content>
-                        {this.renderResults()}
-                        </Modal.Content>
-                        </Modal>
-                   
-                    </div>
-            );
+    items = ItemCollection.find({ Name: this.state.searchterm }, { sort: { Name: 1 } }).fetch();
 
-      }
+
+    return items.map((item) => (
+      <Item key={item._id} item={item} />
+    ));
+  }
+
+
+  render() {
+    let searchterm = this.searchterm;
+    return (
+
+      <div>
+        <Input fluid size='large' icon={<Icon name='search' circular link />} placeholder='Search...' value={this.state.searchterm} onChange={this.updateStateSearchTerm.bind(this)} />
+        <Modal trigger={<Button size='large' color='violet' fluid > Search </Button>}>
+          <Modal.Header>You searched for : {this.state.searchterm}</Modal.Header>
+          <Modal.Content>
+            {this.renderResults()}
+          </Modal.Content>
+        </Modal>
+      </div>
+    );
+
+  }
 }
 
-export default createContainer(() => {
-  return {
-    items: ItemCollection.find({Name: 'A'}, { sort: { Name: 1 }}).fetch()
-
-  };
-}, HomeSearchBar);

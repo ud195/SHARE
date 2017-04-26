@@ -7,32 +7,31 @@ import { ItemCollection } from '../collections/items.js';
 import ItemTable from '../objects/ItemTable.jsx';
 
 class ItemAPI extends React.Component {
- 
 
-      renderItemsList ()
-      {
-            return this.props.items.map((item) => (
-            <ItemTable key={item._id} item={item} />
-      ));
 
-      
+  renderItemsList() {
+    return this.props.items.map((item) => (
+      <ItemTable key={item._id} item={item} />
+    ));
 
-      }
 
-      render() {
-            return (
-            <div>
-            <Segment raised>
-                <Header as='h2'>
-           <Icon name='database' />
+
+  }
+
+  render() {
+    return (
+      <div>
+        <Segment raised>
+          <Header as='h2'>
+            <Icon name='database' />
             <Header.Content>
               Manage items on the network
             </Header.Content>
           </Header>
-            </Segment>
-            <Segment raised>
-            <Table compact celled definition inverted color='blue'>
-       
+        </Segment>
+        <Segment raised>
+          <Table compact celled definition inverted color='blue'>
+
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell />
@@ -44,20 +43,20 @@ class ItemAPI extends React.Component {
               </Table.Row>
             </Table.Header>
             {this.renderItemsList()}
-            </Table>
-            </Segment>
-            </div>
-            );
-      }
+          </Table>
+        </Segment>
+      </div>
+    );
+  }
 
 }
 
 ItemAPI.propTypes = {
   items: PropTypes.array.isRequired,
 };
- 
+
 export default createContainer(() => {
   return {
-    items: ItemCollection.find({}, { sort: { Name: 1 }}).fetch()
+    items: ItemCollection.find({}, { sort: { Name: 1 } }).fetch()
   };
 }, ItemAPI);

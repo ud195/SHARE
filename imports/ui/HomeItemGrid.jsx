@@ -8,36 +8,35 @@ import Item from '../objects/ItemCardFull.jsx';
 
 class ItemGrid extends React.Component {
 
-      renderItemsList ()
-      {
-            return this.props.items.map((item) => (
-            <Item key={item._id} item={item} />
-      ));
+  renderItemsList() {
+    return this.props.items.map((item) => (
+      <Item key={item._id} item={item} />
+    ));
 
-      }
+  }
 
-      render() {
-            return (
-            <div>
-            <Segment compact >
-                  <Header as='h2'>
-           <Icon name='star' />
+  render() {
+    return (
+      <div>
+        <Segment compact >
+          <Header as='h2'>
+            <Icon name='star' />
             <Header.Content>
               Featured Items
             </Header.Content>
           </Header>
-            <CardGroup fluid >
+          <CardGroup >
             {this.renderItemsList()}
-            </CardGroup>
-            </Segment>
-            </div>
-            );
-      }
+          </CardGroup>
+        </Segment>
+      </div>
+    );
+  }
 
 }
 
 export default createContainer(() => {
   return {
-    items: ItemCollection.find({}, { sort: { Name: 1 }, limit: 8 }).fetch()
+    items: ItemCollection.find({}, { sort: { Name: 1 }, limit: 6 }).fetch()
   };
 }, ItemGrid);
