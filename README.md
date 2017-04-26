@@ -1,4 +1,5 @@
 PROJECT SHARE 
+--------------------------------------------------------------------
 
 This is the main project for our web app project share - uploaded on 13/04/17 for the first time.
 
@@ -10,10 +11,8 @@ The project contains the following functionalities up to now:
 4. Data from forms can be captured.
 5. Added states for form data.
 
-----------------------------------------------------------------------
 How to install and run 
 ----------------------------------------------------------------------
-
 
 ------------------------------------------------------
 Installing dependencies
@@ -45,6 +44,8 @@ after all the dependencies have finished installing..
 
 meteor run
 press ENTER
+
+Note: The web app will be empty at the start so you need to register and upload items to view them, this is because the database is local.
 
 -------------------------------------------------------
 Instructions for special cases 
