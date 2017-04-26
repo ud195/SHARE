@@ -4,12 +4,20 @@ PROJECT SHARE
 This is the main project for our web app project share - uploaded on 13/04/17 for the first time.
 
 The project contains the following functionalities up to now:
+--------------------------------------------------------------------
+- Database, UI
+- Searching
+- Uploading items
+- Managing items 
+- Register 
+- Login 
+- Verification of accounts (sending an email with a verification link)
+- Adding and removing users
+- Comments 
+- Contact page 
+- Some stats on items 
+- Routing and navigation
 
-1. Separated pages for UI design (.jsx) based on react.
-2. Routing so now you can access multiple pages through links (react-router).
-3. Added some sample forms and a navigation bar. 
-4. Data from forms can be captured.
-5. Added states for form data.
 
 How to install and run 
 ----------------------------------------------------------------------
