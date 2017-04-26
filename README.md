@@ -29,18 +29,24 @@ run the following commands to install the dependencies
 (copy and paste each line and press enter and wait for the packages to finish installing) 
 
 meteor npm install --save babel-runtime react react-dom react-router react-router-dom bootstrap
+
 meteor npm install --save semantic-ui-react
+
 meteor npm install --save react-addons-pure-render-mixin 
+
 meteor npm install --save react-router@3
 
 meteor add session
+
 meteor add accounts-base
+
 meteor add accounts-password
 
 ------------------------------------------------------
 Running the project
 ------------------------------------------------------
 after all the dependencies have finished installing..
+enter the command 
 
 meteor run
 press ENTER
@@ -63,19 +69,30 @@ Packages
 npm specific packages
 -------------------------
 "babel-runtime": "^6.23.0",  
+
 "bcrypt": "^1.0.2",   
+
 "bootstrap": "^3.3.7", 
+
 "classnames": "^2.2.5",
+
 "react": "^15.5.4",
+
 "react-addons-pure-render-mixin": "^15.5.2",
+
 "react-dom": "^15.5.4", 
+
 "react-router": "^3.0.5", 
+
 "react-router-dom": "^4.1.1",
+
 "semantic-ui-react": "^0.67.2"
 
 
 Meteor specific packages 
 --------------------------
 session
+
 accounts-base
+
 accounts-password
