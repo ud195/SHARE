@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Icon, Header, Table, CardGroup, Segment } from 'semantic-ui-react'
+import { Icon, Header, Table, CardGroup, Segment, Grid } from 'semantic-ui-react'
 
 import { ItemCollection } from '../collections/items.js';
 
@@ -18,16 +18,24 @@ class ItemGrid extends React.Component {
   render() {
     return (
       <div>
-        <Segment compact >
+        <Segment >
           <Header as='h2'>
             <Icon name='star' />
             <Header.Content>
               Featured Items
             </Header.Content>
           </Header>
+          <Grid columns={3}>
+                  <Grid.Column width={1} />
+                        <Grid.Column width={14} >
           <CardGroup >
             {this.renderItemsList()}
           </CardGroup>
+                </Grid.Column>
+
+                <Grid.Column width={1}/>
+
+          </Grid>
         </Segment>
       </div>
     );

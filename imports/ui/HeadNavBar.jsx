@@ -1,4 +1,4 @@
-import React, { Component, PropTypes, Props } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import { Icon, Menu, Segment, Grid, Dropdown, Item, Image } from 'semantic-ui-react';
 import { Session } from 'meteor/session';

@@ -25,7 +25,7 @@ export default class HomeSearchBar extends React.Component {
     let term = this.state.searchterm.trim();
     console.log("Searchterm: " + term);
 
-    items = ItemCollection.find({ Name: this.state.searchterm }, { sort: { Name: 1 } }).fetch();
+    items = ItemCollection.find({ Name: this.state.searchterm.trim() }, { sort: { Name: 1 } }).fetch();
 
 
     return items.map((item) => (

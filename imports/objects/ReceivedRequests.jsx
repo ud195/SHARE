@@ -1,25 +1,25 @@
 import React, { Component, PropTypes } from 'react';
-import { ItemCollection } from '../collections/items.js';
+import { TransactionsCollection } from '../collections/transactions';
 import { Input, Button, Checkbox, Icon, Table } from 'semantic-ui-react';
 
-export default class ItemTable extends Component {
+export default class BorrowalRequestTable extends Component {
 
   UpdateAvailable()
   {
-    ItemCollection.update(this.props.item._id, {
+    TransactionsCollection.update(this.props.item._id, {
       $set: { Status: 'Available' },
     });
   }
 
   UpdateNotAvailable()
   {
-    ItemCollection.update(this.props.item._id, {
+    TransactionsCollection.update(this.props.item._id, {
       $set: { Status: 'Not-Available' },
     });
   }
 
   removeItem() {
-    ItemCollection.remove(this.props.item._id);
+    TransactionsCollection.remove(this.props.item._id);
   }
 
   render() {

@@ -1,19 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import { Header, Table, Icon, Button, Segment } from 'semantic-ui-react'
 import { createContainer } from 'meteor/react-meteor-data';
-import { ItemCollection } from '../collections/items.js';
-import { Session } from 'meteor/session';
+import { TransactionsCollection } from '../collections/transactions';
 
 import ItemTable from '../objects/ItemTable.jsx';
 
-class ItemAPI extends React.Component {
+class BorrowalRequestsAPI extends React.Component {
 
 
-  renderItemsList() {
-    console.log(Session.get('user').username);
+  renderRequestsList() {
 
-    return this.props.items.map((item) => (
-      <ItemTable key={item._id} item={item} />
+    return this.props.requests.map((request) => (
+      <ItemTable key={request._id} request={request} />
     ));
 
   }
@@ -36,17 +34,14 @@ class ItemAPI extends React.Component {
               <Table.Row>
                 <Table.HeaderCell>Action</Table.HeaderCell>
                 <Table.HeaderCell>Item Name</Table.HeaderCell>
+                <Table.HeaderCell>Borrower's name</Table.HeaderCell>
+                <Table.HeaderCell>Exchange Type</Table.HeaderCell>
                 <Table.HeaderCell>Item Price</Table.HeaderCell>
-                <Table.HeaderCell>Item Owner</Table.HeaderCell>
-                <Table.HeaderCell>Item Condition</Table.HeaderCell>
-                <Table.HeaderCell>Item Status</Table.HeaderCell>
+                <Table.HeaderCell>Exchange time</Table.HeaderCell>
                 <Table.HeaderCell>Item Availability</Table.HeaderCell>
-                <Table.HeaderCell>Item Rating</Table.HeaderCell>
-                <Table.HeaderCell>Item Category</Table.HeaderCell>
-                <Table.HeaderCell>Item Location</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
-            {this.renderItemsList()}
+            {this.renderRequestsList()}
           </Table>
         </Segment>
       </div>
@@ -55,12 +50,12 @@ class ItemAPI extends React.Component {
 
 }
 
-ItemAPI.propTypes = {
-	items: PropTypes.array.isRequired,
+BorrowalRequestsAPI.propTypes = {
+	borrowalrequests: PropTypes.array.isRequired,
 };
 
 export default createContainer(() => {
 	return {
-		items: ItemCollection.find({Owner : Session.get('user').username }, {}).fetch()
+		borrowalrequests: TransactionsCollection.find({}, { sort: { createdAt: -1 } }).fetch()
 	};
-}, ItemAPI);
+}, BorrowalRequestsAPI);

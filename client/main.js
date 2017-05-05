@@ -17,6 +17,10 @@ import ContactUs from '../imports/ui/ContactUs.jsx';
 import Comment from '../imports/manage/MessageAPI.jsx';
 import CheckEmailPage from '../imports/ui/CheckEmailPage.jsx';
 import VerifiedPage from '../imports/ui/VerifiedPage.jsx';
+import BorrowPage from '../imports/ui/BorrowForm.jsx';
+import SentRequestsManagementPage from '../imports/manage/SentAPI.jsx';
+import ReceivedRequestsManagementPage from '../imports/manage/ReceivedAPI.jsx';
+
 
 export const App = ({ children }) => (
   <div>
@@ -41,6 +45,8 @@ Meteor.startup(() => {
         <Route path="comment" component={Comment} />
         <Route path="verify-email/:token" onEnter={VerifyEmail} component={Home} />
         <Route path="check-email" component={CheckEmailPage} />
+        <Route path="borrow" component={BorrowPage} />
+
       </Route>
     </Router>, document.getElementById('render-home')
   );
