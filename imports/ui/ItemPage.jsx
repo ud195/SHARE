@@ -1,42 +1,20 @@
 import React, { Component } from 'react';
-import { Divider, Dimmer, Accordion, Form, TextArea, Message, Reveal, Grid, Menu, Segment, Header, Card, Icon, Image, Input, Button, List, Item, ItemContent, Label } from 'semantic-ui-react';
+import { Grid, Menu, Dimmer, Header, Form, Segment, Card, Icon, Image, Divider, Input, Button, List, Item, ItemContent } from 'semantic-ui-react';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+//import { Header, Message, Grid, Card, Input, Icon, Image, Button, Divider, Form, Segment, Modal } from 'semantic-ui-react';
 import Dropzone from 'react-dropzone';
 import request from 'superagent';
+import NotFoundPage from './NotFoundPage.jsx';
 import { ItemCollection } from '../collections/items.js';
 import { TransactionsCollection } from '../collections/transactions.js';
-import { Session } from 'meteor/session';
 
-function StatusColor(props) {
-  const stat = props.stat;
-  const text = props.text;
-  if (stat == 'Available') {
-    return <Label ribbon color='green'>{text}</Label>;
-  }
-  if (stat == 'Not-Available') {
-    return <Label ribbon color='red'>{text}</Label>;
-  }
-  return <Label ribbon color='yellow'>{text}</Label>
-}
-
-function ButtonsDisplayed(props) {
-  const stat = props.stat;
-  const redirect = props.redirect;
-  const direct = props.direct;
-
-  if (stat == 'Not-Available') {
-    return (<Button onClick={direct}  icon='question'  color='yellow' content='Availability'></Button>);
-  }
-
-    return (<Button onClick={redirect}  icon='add to cart'  color='green' content='Borrow'></Button>);
-}
-
-
-export default class extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      createdAt: null,
+export default class UserPage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            item: null,
+            error: null,
+                  createdAt: null,
       duration: "", // length of transaction duration
       type: "", //pickup or delivery
       requeststatus: "", // accepted/denied/received
@@ -44,10 +22,10 @@ export default class extends Component {
       sender: Session.get('user').username,
       price: '',
       priority: '',
-      receiver: null, // request sent to owner of the item 
-      error: null
-  };
-  };
+      receiver: null // request sent to owner of the item 
+    
+        };
+    };
 
 
 HandleClickBorrow()
@@ -56,80 +34,50 @@ HandleClickBorrow()
   this.setState({active : true});
 }
 
-
-HandleClickView()
-{
-
-  this.LoadItem();
-  //items/:id
-  hashHistory.push(`/items/${this.props.item._id}`);
-  console.log("ITIOTITJOI >>XX" ,this.props.item._id);
-
-}
-
 handleHide()
 {
   this.setState({active : false});
 }
 
 
-  redirectcheckavail() {
-    return (
-      <div>
-        <Reveal animated='move'>
-          <Reveal.Content visible>
-            <Image src='/assets/images/wireframe/square-image.png' size='small' />
-          </Reveal.Content>
-          <Reveal.Content hidden>
-            <Image src='/assets/images/avatar/large/chris.jpg' size='small' />
-          </Reveal.Content>
-        </Reveal>
-      </div>);
-  }
+    render() {
+        const {active} = this.state;
+        let { item, error } = this.state;
+        console.log("state>>", this.state);
+        return (
+                                                <Dimmer.Dimmable  dimmed={active}>
 
-  render() {
-    const { active } = this.state
+                <Grid>
 
-    let { error, revealState } = this.state;
-    let { item } = this.props;
-    console.log("state>>", this.state);
-    console.log("props>>", this.props);
-    //console.log("user>>", user);
-    return (
+                      <Grid.Row columns={3}>
+                        <Grid.Column width = {3}>
+                        </Grid.Column>
+                        <Grid.Column width = {10}>
+                            {item ?
+                            <div>
+                            <Item>
+                            <Item.Image size='medium' src={item.imageUrl} />
+                            <Item.Content verticalAlign='middle'>
+                                <Item.Header>{item.Name}</Item.Header>
+                                <Divider/>
+                                <Item.Description>{item.description}</Item.Description>
+                                <Item.Extra>
+                                <Button onClick={this.HandleClickBorrow.bind(this)} size ='huge' floated='left'>
+                                    Borrow
+                                </Button>
+                                </Item.Extra>
+                            </Item.Content>
+                            </Item> </div> 
+                            : <NotFoundPage/>}               
+                            
 
-            <Card color='green'> 
-            <Dimmer.Dimmable as={Segment} dimmed={active}>
+                         </Grid.Column >
+                            <Grid.Column width = {3}>
+                        </Grid.Column>
+                    </Grid.Row> 
+                </Grid> 
+                            <Dimmer page active={active} onClickOutside={this.handleHide}>
 
-            <StatusColor stat={item.status} text={item.status} />
-              <Image src={item.imageUrl} size='medium' />
-              <Card.Content>
-                <Card.Header>
-                  {item.name}
-                </Card.Header>
-                <span className='date'>
-                  Condition : {item.condition}
-                </span>
-                <Divider />
-                <span >
-                  Price : {item.price}
-                </span>
-                <Divider />
-                <span>
-                  Location: {item.location} </span>
-                <Divider />
-                Owner : {item.owner}
-              </Card.Content>
-
-              <Card.Content extra>
-                <Divider />
-                <Button.Group fluid>
-                <ButtonsDisplayed stat={item.status} redirect={this.HandleClickBorrow.bind(this)} direct={this.HandleClickBorrow.bind(this)}  />
-                <Button.Or content='or'/>
-                <Button icon='content' onClick={this.HandleClickView.bind(this)}  color='blue' content='View'></Button>
-                </Button.Group>
-              </Card.Content>    
-              
-          <Dimmer active={active} onClickOutside={this.handleHide}>
             {item ?
               <div>
                 <Form size='small'>
@@ -175,13 +123,18 @@ handleHide()
               </div>
 
               :
-              <h1> error mounting  </h1>}           
-               </Dimmer>       
-               </Dimmer.Dimmable></Card>
+              <h1> error mounting  </h1>}
+                            
+                              </Dimmer>       
 
+                                    </Dimmer.Dimmable>
 
-    )
-  }
+        )
+    }
+
+    componentDidMount() {
+        this.LoadItem();
+    }
 
   onDurationChange(e) {
     this.setState({ duration: e.target.value });
@@ -198,22 +151,16 @@ handleHide()
     this.setState({ price: e.target.value });
   }
 
-  LoadItem() {
-    let item = ItemCollection.findOne({ "_id": this.props.item._id });
-    if (item) {
-      this.setState({ item: item });
-      this.setState({ receiver: item.owner });
-      this.setState({ itemId: item._id });
-      console.log("Item Mount ::: >>", item);
-      console.log("Sender", item.sender);
-      console.log("receiver", item.receiver);
+    LoadItem() {
+        let item = ItemCollection.findOne({ "_id": this.props.params.id });
+        if (item) {
+            this.setState({ item: item });
+        }
+        console.log("items-->", item);
     }
-    else {
-      this.setState({ error: "Error>>>" });
-    }
-  }
 
-  onBorrowalSubmit(e) {
+
+      onBorrowalSubmit(e) {
     e.preventDefault();
     console.log("submited..", this.state);
     let request = {

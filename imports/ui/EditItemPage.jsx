@@ -10,8 +10,8 @@ export default function (props) {
           </Grid.Column>
           <Grid.Column>
             <Message floating>
-              <h1>Thank you!</h1>
-              <p>your account is varified now.</p>
+              <h1>Edit Item page</h1>
+              <p>.....</p>
             </Message>
           </Grid.Column>
           <Grid.Column>

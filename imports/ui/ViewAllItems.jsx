@@ -1,17 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Image, Table, CardGroup, Segment, Statistic } from 'semantic-ui-react'
-
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import { ItemCollection } from '../collections/items.js';
 
 import Item from '../objects/ItemCardFull.jsx';
 
 class ItemViewAll extends React.Component {
 
+
     renderItemsList() {
         return this.props.items.map((item) => (
             <Item key={item._id} item={item} />
         ));
+
+        //new Counter('Count', ItemCollection.find());
 
     }
 

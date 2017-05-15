@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes, Props } from 'react';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
-import { Icon, Menu, Segment, Grid, Dropdown, Item, Image } from 'semantic-ui-react';
+import { Icon, Menu, Segment, Grid, Dropdown, Item, Image, Container } from 'semantic-ui-react';
 import { Session } from 'meteor/session';
 
 class HeadNavBar extends React.Component {
@@ -55,7 +55,15 @@ class HeadNavBar extends React.Component {
   RedirectLogout(event, { name }) {
     event.preventDefault();
     Meteor.logout();
+    Session.set("user", null);
     hashHistory.push('/home');
+
+  }
+
+  RedirectDashboard(event, {name})
+  {
+    event.preventDefault();
+    hashHistory.push(`/dashboard/${Session.get('user').username}`);
   }
 
   render() {
@@ -66,33 +74,28 @@ class HeadNavBar extends React.Component {
           <Image src='https://image.ibb.co/hb0nQk/share_logo.png' size='small' />
         </Grid.Column>
         <Grid.Column width={14}>
-          <Menu size='huge' color='green'>
+          <Menu size='huge' color='green' inverted>
             <Menu.Item name='Home' href="#/home"  >
               <Icon name='home' />
               Home
-                  </Menu.Item>
-
-            <Menu.Item name='View Items' href="#/viewall">
-              <Icon name='grid layout' />
-              View Items
-                  </Menu.Item>
-
-            <Menu.Item name='Comments' href="#/comment">
-              <Icon name='comments' />
-              Comments
-                  </Menu.Item>
+              </Menu.Item>
+            
+            <Menu.Item name='viewALl' href="#/viewall"  >
+              <Icon name='eye' />
+              View All Items
+              </Menu.Item>
 
             {!user ?
               <Menu.Menu position='right'>
                 <Menu.Item name="user" href="#/login">
                   <Icon name='sign in' />
                   Login
-            </Menu.Item>
+                </Menu.Item>
 
                 <Menu.Item name='Register' href="#/register">
                   <Icon name='users' />
                   Register
-            </Menu.Item>
+              </Menu.Item>
               </Menu.Menu>
               : ""}
 
@@ -100,17 +103,12 @@ class HeadNavBar extends React.Component {
               <Menu.Menu position='right'>
                 <Dropdown item text={user.username}>
                   <Dropdown.Menu>
-                    <Dropdown.Item name='Upload Item' href="#/uploaditem">Upload Item</Dropdown.Item>
-                    <Dropdown.Item name='Manage Items' href="#/manageitem">Manage Items</Dropdown.Item>
                     <Dropdown.Item name='Logout' onClick={this.RedirectLogout}>Logout</Dropdown.Item>
+                    <Dropdown.Item name = 'dashboard' onClick = {this.RedirectDashboard}> Dashboard </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </Menu.Menu>
               : ""}
-            <Menu.Item name='Contact Us' href="#/contactus">
-              <Icon name='mail outline' />
-              Contact Us
-                  </Menu.Item>
           </Menu>
         </Grid.Column>
       </Grid>

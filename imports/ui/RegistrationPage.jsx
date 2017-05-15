@@ -137,31 +137,42 @@ export default class RegistrationPage extends Component {
       }
     };
 
-
-    Accounts.createUser({
-      email: this.state.email,
-      username: this.state.username,
-      password: this.state.password,
-      profile: {
-        firstName: this.state.firstName,
-        lastName: this.state.lastName
-      }
-    }, (err) => {
-      if (err) {
-        this.setState({
-          error: err.reason
-        });
+    Meteor.call('serverValidateUser', user, (callback) => {
+      if (callback) {
+        this.setState({ error: callback.reason });
       } else {
-        var userId = Meteor.userId();
-        Meteor.call('serverVerifyEmail', this.state.email, userId, function () {
-          console.log("Verification Email Sent");
-          if (Meteor.user()) {
-            Session.set('user', Meteor.user());
+        Accounts.createUser({
+          email: this.state.email,
+          username: this.state.username,
+          password: this.state.password,
+          profile: {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            avatarUrl: 'http://res.cloudinary.com/rudree/image/upload/v1493390709/user/default.png',
+            address: "",
+            aboutMe: ""
           }
-          hashHistory.push('/check-email');
+        }, (err) => {
+          if (err) {
+            this.setState({ error: err.reason });
+          } else {
+            var userId = Meteor.userId();
+            Meteor.call('serverVerifyEmail', this.state.email, userId, (callback) => {
+              if (!callback) {
+                console.log("Verification Email Sent");
+                if (Meteor.user()) {
+                  Session.set('user', Meteor.user());
+                }
+                hashHistory.push('/check-email');
+              } else {
+                this.setState({ error: callback.reason });
+              }
+            });
+          }
         });
       }
-    });
+    })
+
 
   }
 }

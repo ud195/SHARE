@@ -4,30 +4,31 @@ import { MessageCollection } from '../collections/messages.js';
 import { Header, Card, Input, Icon, Image, Button, Divider, Form, Segment, Table } from 'semantic-ui-react';
 
 const colors = [
-	'teal'
+  'teal'
 ]
 
 import Message from '../objects/message.jsx';
 
 class MessageAPI extends React.Component {
 
-	constructor(props) {
+	constructor(props) 
+	{
 		super(props);
 
 		var CurrentDate = new Date();
-		this.state =
-			{
-				MessageContent: '',
-				MessageOwner: 'Share-admin',
-			}
+		this.state = 
+		{
+			MessageContent: '',
+			MessageOwner :'Share-admin',
+		}
 
 		this.updateStateMessageContent = this.updateStateMessageContent.bind(this);
 		this.updateStateMessageOwner = this.updateStateMessageOwner.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	};
 
-	updateStateMessageContent(event) { this.setState({ MessageContent: event.target.value }); }
-	updateStateMessageOwner(event) { this.setState({ MessageOwner: event.target.value }); }
+	updateStateMessageContent(event)     {this.setState({ MessageContent: event.target.value});}
+	updateStateMessageOwner(event)       {this.setState({MessageOwner : event.target.value});}
 
 
 	handleSubmit() {
@@ -38,12 +39,13 @@ class MessageAPI extends React.Component {
 		console.log("Owner: " + this.state.MessageOwner);
 		console.log("Status: " + date);
 
-		MessageCollection.insert({ Content, Owner, date });
+		MessageCollection.insert({Content,Owner,date});
 	}
 
-	renderMessageList() {
+	renderMessageList ()
+	{
 		return this.props.messages.map((message) => (
-			<Message key={message._id} message={message} />
+		<Message key={message._id} message={message} />
 		));
 	}
 
@@ -66,17 +68,17 @@ class MessageAPI extends React.Component {
 
 								<Form.Field>
 									<label>Message Content</label>
-									<Input type="text" value={this.state.MessageContent} onChange={this.updateStateMessageContent} />
+									<Input type = "text" value = {this.state.MessageContent} onChange = {this.updateStateMessageContent} />            
 								</Form.Field>
 								<Divider hidden />
 
 								<Form.Field>
 									<label>Message Owner</label>
-									<Input icon="user" type="text" value={this.state.MessageOwner} onChange={this.updateStateMessageOwner} />
+									<Input icon = "user" type = "text" value = {this.state.MessageOwner} onChange = {this.updateStateMessageOwner} />
 								</Form.Field>
 								<Divider hidden />
 							</Form>
-							<Button icon='send' color='blue' content='Submit' onClick={this.handleSubmit} />
+							<Button icon='send' color='blue' content='Submit' onClick = {this.handleSubmit}/>
 						</Segment>
 					</Segment.Group>
 				</Segment.Group>
@@ -89,8 +91,8 @@ class MessageAPI extends React.Component {
 						</Header.Content>
 					</Header>
 				</Segment>
-				<Segment>
-					{this.renderMessageList()}
+			    <Segment>
+				{this.renderMessageList()}
 				</Segment>
 			</div>
 		);
@@ -98,11 +100,11 @@ class MessageAPI extends React.Component {
 }
 
 MessageAPI.propTypes = {
-	messages: PropTypes.array.isRequired,
+  messages: PropTypes.array.isRequired,
 };
-
+ 
 export default createContainer(() => {
-	return {
-		messages: MessageCollection.find({}, { sort: { createdAt: -1 } }).fetch()
-	};
+  return {
+    messages: MessageCollection.find({}, { sort: { createdAt: -1 }}).fetch()
+  };
 }, MessageAPI);

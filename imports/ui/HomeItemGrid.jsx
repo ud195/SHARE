@@ -1,16 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Icon, Header, Table, CardGroup, Segment, Grid } from 'semantic-ui-react'
+import { Icon, Divider, Header, Table, CardGroup, Segment } from 'semantic-ui-react'
 
 import { ItemCollection } from '../collections/items.js';
 
-import Item from '../objects/ItemCardFull.jsx';
+//import Item from '../objects/ItemCardFull.jsx';
+import ItemCard from './items/Featured.jsx';
 
 class ItemGrid extends React.Component {
 
   renderItemsList() {
     return this.props.items.map((item) => (
-      <Item key={item._id} item={item} />
+      <ItemCard key={item._id} item={item} />
     ));
 
   }
@@ -18,24 +19,17 @@ class ItemGrid extends React.Component {
   render() {
     return (
       <div>
-        <Segment >
+        <Segment compact >
           <Header as='h2'>
             <Icon name='star' />
             <Header.Content>
               Featured Items
             </Header.Content>
+            <Divider/>
           </Header>
-          <Grid columns={3}>
-                  <Grid.Column width={1} />
-                        <Grid.Column width={14} >
           <CardGroup >
             {this.renderItemsList()}
           </CardGroup>
-                </Grid.Column>
-
-                <Grid.Column width={1}/>
-
-          </Grid>
         </Segment>
       </div>
     );
