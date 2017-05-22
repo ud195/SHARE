@@ -25,61 +25,23 @@ export default class extends Component {
         console.log("id>>", id);
         //console.log("user>>", user);
         return (
-            <div>
-                <Grid.Column verticalAlign="middle">
-                </Grid.Column>
-                <Grid.Column>
-                    <Card centered>
-                        <Card.Content>
-                                 <Popup
-                                    trigger={<a href={`#/items/${item._id}`}><Image src={item.imageUrl} /></a>}
-                                    content={item.owner}
-                                    basic
-                                />   
-                                {item.name}
-                                <Popup
-                                    trigger={ <Icon color="blue" name="marker" size="small"/>}
-                                    content={item.location}
-                                    basic
-                                />
-                        </Card.Content>
-                    </Card>
-                </Grid.Column>
-            </div>
+
+            <Card>
+                    <Popup position='bottom right'
+                    trigger={<a href={`#/items/${item._id}`}>
+                    <Image fluid src={item.imageUrl} /></a>}
+                    content={item.owner + "'s item"} 
+                    basic/>   
+                <Card.Content>
+                            <Icon name='registered' />
+                            <strong>{item.name}</strong>
+                    <Popup  position='bottom right'
+                        trigger={<Icon color="blue" name="marker" size="big" />}
+                        content={item.location}
+                        basic
+                    />
+                </Card.Content>
+            </Card>
         )
-    }
-
-    renderItems(item) {
-        let panels = [
-            {
-                title: (
-                    <Card>
-                        <Card.Content>
-                            <Card.Header> {item.name}</Card.Header>
-
-                            <Image src={item.imageUrl} />
-                        </Card.Content>
-                    </Card>),
-                content: (
-                    <Card>
-                        <Card.Content>
-                            <Card.Description>
-                                <span></span>
-                                <p>{item.description}</p>
-                            </Card.Description>
-                            <Divider />
-
-                            <span>Condition : {item.condition}</span>
-                            <Divider />
-
-                            <span>Price : {item.price} </span>
-                        </Card.Content>
-                    </Card>
-                ),
-            }
-        ]
-        return (
-            <Accordion key={item._id} panels={panels} exclusive={false} fluid />
-        );
     }
 }

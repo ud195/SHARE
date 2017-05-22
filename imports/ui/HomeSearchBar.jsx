@@ -1,70 +1,102 @@
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Grid,Input, Modal, Icon, Divider, Image, Header, Button, Container } from 'semantic-ui-react'
+import { Grid,Input, Search, Modal, Icon, Divider, Image, Header, Button, Container } from 'semantic-ui-react'
 
 import { ItemCollection } from '../collections/items.js';
 
 import Item from '../objects/ItemCardFull.jsx';
 
-class HomeSearchBar extends React.Component {
+const source = (ItemCollection.find( {} ,{sort: {name: 1 } }).fetch());
+
+export default class extends Component {
 
   constructor(props) {
     super(props);
 
     this.state =
       {
-        searchterm: ''
+        isLoading: false, results: [], value: ''
       }
-
-    this.updateStateSearchTerm = this.updateStateSearchTerm.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   };
 
   updateStateSearchTerm(event) { this.setState({ searchterm: event.target.value }); }
 
-  handleSubmit() {
-    console.log("Searchterm: " + this.state.searchterm);
-    console.log(global);
-  }
-
-  renderResults() {
-    return this.props.items.map((item) => (
+ /* handleSubmit() {
+    items = ItemCollection.find({Name: this.state.searchterm }, {sort: {Name: 1 } }).fetch();
+        return this.props.items.map((item) => (
       <Item key={item._id} item={item} />
     ));
+
+    console.log("Searchterm: " + this.state.searchterm);
+  }*/
+
+  resetComponent()
+  {
+    this.setState({ isLoading: false, results: [], value: '' });
+  }
+
+  handleResultSelect(e, result) 
+  {
+    this.setState({ value: result.name });
   }
 
 
+  handleSearchChange(e, value) 
+  {
+
+        this.setState({ isLoading : true});
+        this.setState({ value});
+
+              if (this.state.value.length < 1) 
+              {
+      return (this.resetComponent());}
+
+  setTimeout(() => {
+
+
+      const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
+      const isMatch = (result) => re.test(result.name)
+
+      this.setState({
+        isLoading: false,
+        results: _.filter(source, isMatch),
+      })
+    }, 500);
+  }
 
   render() {
-    return (
-      <Container text>
-        <Grid>
-          <Grid.Row columns={2}>
-            <Grid.Column>
-              <Input size='large' icon={<Icon name='search' circular link />} placeholder='Search...' value={this.state.searchterm} onChange={this.updateStateSearchTerm.bind(this)} />
-              </Grid.Column>
-              <Grid.Column>
-              <Modal trigger={<Button size='medium' color='green' > Search </Button>}>
-                <Modal.Header>You searched for : {this.state.searchterm}</Modal.Header>
-                <Modal.Content>
-                  {this.renderResults()}
-                </Modal.Content>
-              </Modal>
-              </Grid.Column>
-              </Grid.Row>
-              </Grid>          
-      </Container>
-            );
 
+    const { isLoading, value, results } = this.state
+
+
+    return (
+      <Grid>
+        <Grid.Column width={8}>
+          <Search
+            loading={isLoading}
+            onResultSelect={this.handleResultSelect}
+            onSearchChange={this.handleSearchChange}
+            results={results}
+            value={value}
+            {...this.props}
+          />
+        </Grid.Column>
+        <Grid.Column width={8}>
+          <Header>State</Header>
+          <pre>{JSON.stringify(this.state, null, 8)}</pre>
+          <Header>Options</Header>
+          <pre>{JSON.stringify(source, null, 2)}</pre>
+        </Grid.Column>
+      </Grid>  
+    );
+
+  }
+
+    componentWillMount() {
+    this.resetComponent();
   }
 }
 
-export default createContainer(() => {
-  return {
-              items: ItemCollection.find({Name: 'A' }, {sort: {Name: 1 } }).fetch()
-
-  };
-}, HomeSearchBar);
 
 
 /*    <div>
@@ -77,3 +109,8 @@ export default createContainer(() => {
               </Modal>
 
             </div>*/
+
+
+
+
+

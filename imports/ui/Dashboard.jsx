@@ -42,8 +42,8 @@ export default class extends Component {
                                         <Icon name='database' />
                                         <Icon corner name='add' />
                                     </Icon.Group>
-                                    Upload Item
-                    </a>
+                                    Dashboard 
+                                 </a>
                             </Header>
                             {(activeItem == 'Profile') ? <User user={user} /> : <p></p>}
                             {(activeItem == 'Items') ? <ItemsList user={user} /> : <p></p>}

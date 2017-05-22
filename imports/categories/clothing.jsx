@@ -5,9 +5,9 @@ import { Icon, Divider, Header, Table, CardGroup, Segment } from 'semantic-ui-re
 import { ItemCollection } from '../collections/items.js';
 
 //import Item from '../objects/ItemCardFull.jsx';
-import ItemCard from './items/Featured.jsx';
+import ItemCard from '../ui/items/Featured.jsx';
 
-class ItemGrid extends React.Component {
+class ClothingClass extends React.Component {
 
   renderItemsList() {
     return this.props.items.map((item) => (
@@ -34,8 +34,9 @@ class ItemGrid extends React.Component {
 
 }
 
+
 export default createContainer(() => {
   return {
-    items: ItemCollection.find({}, { sort: { Name: 1 }, limit: 6 }).fetch()
+    items: ItemCollection.find({ category : 'Clothing'}, { sort: { Name: 1 }, limit: 6 }).fetch()
   };
-}, ItemGrid);
+}, ClothingClass);

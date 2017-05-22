@@ -4,7 +4,9 @@ import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import Dropzone from 'react-dropzone';
 import request from 'superagent';
 import { TransactionsCollection } from '../../collections/transactions.js';
-import RequestComponent from '../../objects/RequestTable.jsx';
+import RequestSentComponent from '../../objects/RequestSent.jsx';
+import RequestReceivedComponent from '../../objects/RequestReceived.jsx';
+
 import { Session } from 'meteor/session';
 
 export default class TransacAPI extends Component {
@@ -12,56 +14,77 @@ export default class TransacAPI extends Component {
         super(props);
         this.state = {
             error: null,
-            requests: null,
-            requestsCount: null
+            requestsSent: null,
+            requestsReceived : null,
+            requestsReceivedCount: null,
+            requestsSentCount : null
         };
     };
 
     render() {
-        let { error, requests, requestsCount } = this.state;
-        console.log("state>>", this.state);
-        console.log("props>>", this.props);
-        console.log("user>>", Session.get('user').username);
+        let { error, requestsSent, requestsReceived, requestsReceivedCount, requestsSentCount } = this.state;
+
         return (
             <div>
-                <Container>
-                {requestsCount > 0 ?
-                    <Segment.Group>
-                        <Segment><Header><Icon name='external' />Requests</Header></Segment>
-                        <List horizontal relaxed='very'>
-                            {requests.map(request => this.renderItems(request))}
-                        </List>
-                    </Segment.Group>
-                    : <Message size='huge'>You don't have any uploaded items yet.<br />add now</Message>
-                }
-                </Container>
-            </div>
+
+                
+                <Segment>
+                <Header><Icon name='arrow right' />Requests Sent</Header>
+                {requestsSentCount > 0 ?
+                       <Card.Group>
+                            {requestsSent.map(req => this.renderSent(req))}
+                       </Card.Group>
+                    : <Message size='huge'>You didn't send any borrowal requests yet.</Message>  }               
+                </Segment>
+
+                <Segment>
+                <Header><Icon name='arrow left' />Requests Received</Header>
+                {requestsReceivedCount > 0 ?
+                       <Card.Group>
+                            {requestsReceived.map(request => this.renderReceived(request))}
+                       </Card.Group>
+                    : <Message size='huge'>You didn't receive any borrowal requests yet.</Message> }
+                </Segment>
+
+             </div>
+
         )
     }
 
     componentDidMount() {
-        this.loadItems();
+        this.LoadRequests();
     }
 
-    loadItems() {
-        let requests = TransactionsCollection.find({ sender : Session.get('user').username }).fetch();
-        let requestsCount = TransactionsCollection.find({ sender : Session.get('user').username }).count();
-        if (requests) {
-            this.setState({ requests: requests });
-            this.setState({ requestsCount: requestsCount });
+    LoadRequests() {
+        let requestsSent = TransactionsCollection.find({ sender : Session.get('user').username }).fetch();
+        let requestsSentCount = TransactionsCollection.find({ sender : Session.get('user').username }).count();
+        let requestsReceived = TransactionsCollection.find({ receiver : Session.get('user').username }).fetch();
+        let requestsReceivedCount = TransactionsCollection.find({ receiver : Session.get('user').username }).count();
+
+
+        if (requestsSent || requestsReceived) {
+            this.setState({ requestsSent: requestsSent });
+            this.setState({ requestsReceived: requestsReceived });
+            this.setState({ requestsReceivedCount: requestsReceivedCount });
+            this.setState({ requestsSentCount: requestsSentCount });
         } else {
             this.setState({ error: "Error>>>" });
         }
-        console.log("items-->", requests);
     }
 
-    renderItems(request) {
-
-        // <Accordion key={item._id} panels={panels} exclusive={false} fluid />
+    renderSent(req) {
         return (
-            <List.Item>
-           <RequestComponent key={request._id} request={request} />
-           </List.Item>
+            <div>
+           <RequestSentComponent key={req._id} req={req} />
+           </div>
+        );
+    }
+
+        renderReceived(request) {
+        return (
+            <div>
+           <RequestReceivedComponent key={request._id} request = {request}/>
+           </div>
         );
     }
 }

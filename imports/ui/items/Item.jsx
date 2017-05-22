@@ -5,7 +5,6 @@ import Dropzone from 'react-dropzone';
 import request from 'superagent';
 import NotFoundPage from '../NotFoundPage.jsx';
 import { ItemCollection } from '../../collections/items.js';
-import ItemForm from './Form.jsx';
 
 export default class extends Component {
     constructor(props) {

@@ -10,25 +10,36 @@ import { Session } from 'meteor/session';
 function StatusColor(props) {
   const stat = props.stat;
   const text = props.text;
+    if (stat == 'Not-Available') {
+    return <Label ribbon color='red'>{text}</Label>;
+  }
   if (stat == 'Available') {
     return <Label ribbon color='green'>{text}</Label>;
   }
-  if (stat == 'Not-Available') {
-    return <Label ribbon color='red'>{text}</Label>;
-  }
+
   return <Label ribbon color='yellow'>{text}</Label>
 }
 
 function ButtonsDisplayed(props) {
   const stat = props.stat;
-  const redirect = props.redirect;
   const direct = props.direct;
+  const gotoedit = props.gotoedit;
+  const checkuser = props.checkuser;
+  const gotologin = props.gotologin;
 
-  if (stat == 'Not-Available') {
+if(Session.get('user') == null)
+{
+  return (<Button icon='content' onClick={gotologin} content='Login to borrow'></Button>);
+}
+else if(checkuser == Session.get('user').username)
+  {
+    return (<Button icon='content' onClick={gotoedit}  color='violet' content='Edit'></Button>);
+  }
+  else if (stat == 'Not-Available') {
     return (<Button onClick={direct}  icon='question'  color='yellow' content='Availability'></Button>);
   }
 
-    return (<Button onClick={redirect}  icon='add to cart'  color='green' content='Borrow'></Button>);
+    return (<Button onClick={direct}  icon='add to cart'  color='green' content='Borrow'></Button>);
 }
 
 
@@ -41,7 +52,8 @@ export default class extends Component {
       type: "", //pickup or delivery
       requeststatus: "", // accepted/denied/received
       itemId: "", // item id 
-      sender: Session.get('user').username,
+      itemName : '',
+      sender: "",
       price: '',
       priority: '',
       receiver: null, // request sent to owner of the item 
@@ -67,30 +79,30 @@ HandleClickView()
 
 }
 
+
+redirectlogin()
+{
+  hashHistory.push('login');
+}
+
 handleHide()
 {
   this.setState({active : false});
 }
 
+redirectedit()
+{
+    this.LoadItem();
+  //items/:id
+  hashHistory.push(`/items/${this.props.item._id}/edit`);
+}
 
-  redirectcheckavail() {
-    return (
-      <div>
-        <Reveal animated='move'>
-          <Reveal.Content visible>
-            <Image src='/assets/images/wireframe/square-image.png' size='small' />
-          </Reveal.Content>
-          <Reveal.Content hidden>
-            <Image src='/assets/images/avatar/large/chris.jpg' size='small' />
-          </Reveal.Content>
-        </Reveal>
-      </div>);
-  }
+
 
   render() {
     const { active } = this.state
 
-    let { error, revealState } = this.state;
+    let { error } = this.state;
     let { item } = this.props;
     console.log("state>>", this.state);
     console.log("props>>", this.props);
@@ -123,7 +135,7 @@ handleHide()
               <Card.Content extra>
                 <Divider />
                 <Button.Group fluid>
-                <ButtonsDisplayed stat={item.status} redirect={this.HandleClickBorrow.bind(this)} direct={this.HandleClickBorrow.bind(this)}  />
+                <ButtonsDisplayed checkuser= {item.owner} gotologin={this.redirectlogin.bind(this)} stat={item.status} direct={this.HandleClickBorrow.bind(this)} gotoedit={this.redirectedit.bind(this)}  />
                 <Button.Or content='or'/>
                 <Button icon='content' onClick={this.HandleClickView.bind(this)}  color='blue' content='View'></Button>
                 </Button.Group>
@@ -203,7 +215,9 @@ handleHide()
     if (item) {
       this.setState({ item: item });
       this.setState({ receiver: item.owner });
+      this.setState({sender : Session.get('user').username});
       this.setState({ itemId: item._id });
+      this.setState({ itemName : item.name});
       console.log("Item Mount ::: >>", item);
       console.log("Sender", item.sender);
       console.log("receiver", item.receiver);
@@ -222,6 +236,7 @@ handleHide()
       type: this.state.type, //pickup or delivery
       requeststatus: 'sent', // accepted/denied/received
       itemId: this.state.itemId, // item id 
+      itemName: this.state.itemName, // item id 
       price: this.state.price,
       priority: this.state.priority,
       error: this.state.error,
@@ -231,7 +246,7 @@ handleHide()
 
     TransactionsCollection.insert(
       {
-        receiver: request.receiver, sender: request.sender, item_id: request.item_id,
+        receiver: request.receiver, sender: request.sender, item_id: request.item_id, itemname : request.itemName,
         createdAt: request.createdAt, priority: request.priority, price: request.price,
         duration: request.duration, type: request.type, requeststatus: request.requeststatus
       }
