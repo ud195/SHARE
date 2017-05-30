@@ -6,6 +6,7 @@ import request from 'superagent';
 import { ItemCollection } from '../collections/items.js';
 import { TransactionsCollection } from '../collections/transactions.js';
 import { Session } from 'meteor/session';
+import ReactCountdownClock from 'react-countdown-clock';
 
 function StatusColor(props) {
   const stat = props.stat;
@@ -26,6 +27,7 @@ function ButtonsDisplayed(props) {
   const gotoedit = props.gotoedit;
   const checkuser = props.checkuser;
   const gotologin = props.gotologin;
+  const showclock = props.showclock;
 
 if(Session.get('user') == null)
 {
@@ -36,7 +38,7 @@ else if(checkuser == Session.get('user').username)
     return (<Button icon='content' onClick={gotoedit}  color='violet' content='Edit'></Button>);
   }
   else if (stat == 'Not-Available') {
-    return (<Button onClick={direct}  icon='question'  color='yellow' content='Availability'></Button>);
+    return (<Button onClick={showclock}  icon='question'  color='yellow' content='Availability'></Button>);
   }
 
     return (<Button onClick={direct}  icon='add to cart'  color='green' content='Borrow'></Button>);
@@ -79,6 +81,11 @@ HandleClickView()
 
 }
 
+HandleClickAvailable()
+{
+    this.LoadItem();
+    this.setState({active2 : true});
+}
 
 redirectlogin()
 {
@@ -88,6 +95,11 @@ redirectlogin()
 handleHide()
 {
   this.setState({active : false});
+}
+
+handleHide2()
+{
+  this.setState({active2 : false});
 }
 
 redirectedit()
@@ -100,8 +112,8 @@ redirectedit()
 
 
   render() {
-    const { active } = this.state
-
+    const { active } = this.state;
+    const {active2} = this.state;
     let { error } = this.state;
     let { item } = this.props;
     console.log("state>>", this.state);
@@ -110,7 +122,7 @@ redirectedit()
     return (
 
             <Card color='green'> 
-            <Dimmer.Dimmable as={Segment} dimmed={active}>
+            <Dimmer.Dimmable as={Card} dimmed={active}>
 
             <StatusColor stat={item.status} text={item.status} />
               <Image src={item.imageUrl} size='medium' />
@@ -136,11 +148,58 @@ redirectedit()
               <Card.Content extra>
                 <Divider />
                 <Button.Group fluid>
-                <ButtonsDisplayed checkuser= {item.owner} gotologin={this.redirectlogin.bind(this)} stat={item.status} direct={this.HandleClickBorrow.bind(this)} gotoedit={this.redirectedit.bind(this)}  />
+                <ButtonsDisplayed checkuser= {item.owner} showclock={this.HandleClickAvailable.bind(this)}
+                 gotologin={this.redirectlogin.bind(this)} stat={item.status} 
+                 direct={this.HandleClickBorrow.bind(this)} gotoedit={this.redirectedit.bind(this)}  />
                 <Button.Or content='or'/>
                 <Button icon='content' onClick={this.HandleClickView.bind(this)}  color='blue' content='View'></Button>
                 </Button.Group>
-              </Card.Content>    
+              </Card.Content>
+
+              <Dimmer active={active2} inverted onClickOutside={this.handleHide2}>
+                
+                <Grid>
+                  <Grid.Row>
+                    <Grid.Column width={0}></Grid.Column>
+
+                    <Grid.Column width={7}>
+                      <Grid.Row>
+                      <Grid.Column width={16}>  
+                      <Header as='h3' > Available in </Header>
+                      </Grid.Column>
+
+                      <Grid.Row>
+                      </Grid.Row>
+                      <Grid.Column width={16}>
+                      <ReactCountdownClock seconds={4*24*3600} color="#D35400" alpha={4.0} size={150}/>
+                      </Grid.Column>
+                      </Grid.Row>
+                      <Divider hidden/>
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+
+                      <Grid.Row>
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Grid.Column width={16}>  
+                      <Button onClick={this.handleHide2.bind(this)} color='red' icon='cross'> OK </Button>
+                      </Grid.Column>  
+                      </Grid.Row>
+                      </Grid.Column>
+
+                      <Grid.Column width={9}></Grid.Column>
+                  </Grid.Row>
+                  </Grid>
+              </Dimmer>       
+
+                        
               
           <Dimmer active={active} onClickOutside={this.handleHide}>
             {item ?
@@ -149,7 +208,7 @@ redirectedit()
                   <Form.Field>
                     <Header as='h4' block>Duration of borrowal (days)</Header>
                     <Input type="text" placeholder="e.g. 4"
-                      value={this.state.duration}
+                      value={this.state.duration.trim()}
                       onChange={this.onDurationChange.bind(this)}
                     />
                   </Form.Field>
@@ -216,7 +275,7 @@ redirectedit()
     if (item) {
       this.setState({ item: item });
       this.setState({ receiver: item.owner });
-      this.setState({sender : Session.get('user').username});
+      this.setState({ sender : Session.get('user').username});
       this.setState({ itemId: item._id });
       this.setState({ itemName : item.name});
       console.log("Item Mount ::: >>", item);
@@ -230,9 +289,16 @@ redirectedit()
 
   onBorrowalSubmit(e) {
     e.preventDefault();
+ 		var date = new Date();
+		var dd = date.getDate();
+		var mm = date.getMonth() + 1;
+		var yy = date.getFullYear();
+		var hh = date.getHours();
+		var mn = date.getMinutes();
+
     console.log("submited..", this.state);
     let request = {
-      createdAt: new Date(),
+      createdAt : date,
       duration: this.state.duration, // length of transaction duration
       type: this.state.type, //pickup or delivery
       requeststatus: 'sent', // accepted/denied/received
@@ -242,14 +308,20 @@ redirectedit()
       priority: this.state.priority,
       error: this.state.error,
       receiver: this.state.receiver, // receiver 
+      ddaccepted: '',
+      mmaccepted: '',
+      yyaccepted: '',
+      ddreturn: '',
+      mmreturn: '',
       sender: Session.get('user').username
     }
 
     TransactionsCollection.insert(
       {
-        receiver: request.receiver, sender: request.sender, item_id: request.item_id, itemname : request.itemName,
+        receiver: request.receiver, sender: request.sender, itemId: request.itemId, itemname : request.itemName,
         createdAt: request.createdAt, priority: request.priority, price: request.price,
-        duration: request.duration, type: request.type, requeststatus: request.requeststatus
+        duration: request.duration, type: request.type, requeststatus: request.requeststatus, ddaccepted : request.ddaccepted,
+        mmaccepted : request.mmaccepted, yyaccepted : request.yyaccepted, ddreturn : request.ddreturn, mmreturn : request.mmreturn
       }
     );
     this.handleHide();

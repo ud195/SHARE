@@ -25,7 +25,7 @@ class ItemViewAll extends React.Component {
                     <Grid.Row columns={3}>
                         <Grid.Column width={5}>
                         </Grid.Column>
-                        <Grid.Column width={6}>
+                        <Grid.Column width={7}>
                             <Segment>
                             <Statistic.Group>
                                 <Statistic>
@@ -37,7 +37,7 @@ class ItemViewAll extends React.Component {
                                 </Statistic>
                                 <Statistic>
                                     <Statistic.Value>
-                                        <Icon name='database'/>
+                                        <Icon name='dollar'/>
                                         {ItemCollection.find({ price: 0 }).count()}
                                     </Statistic.Value>
                                     <Statistic.Label>Items Are Free</Statistic.Label>
@@ -45,22 +45,22 @@ class ItemViewAll extends React.Component {
                                 <Statistic>
                                     <Statistic.Value>
                                         <Icon name='wrench'/>
-                                        {ItemCollection.find({ condition: 'working' }).count()}
+                                        {ItemCollection.find({ condition: 'new' }).count()}
                                     </Statistic.Value>
-                                    <Statistic.Label>Items Are in <div> working Condition </div></Statistic.Label>
+                                    <Statistic.Label>Items ARE NEW</Statistic.Label>
                                 </Statistic>
                                 <Statistic>
                                     <Statistic.Value>
-                                        <Icon name='database'/>
-                                        {ItemCollection.find({ condition: 'working' }).count()}
+                                        <Icon name='checkmark'/>
+                                        {ItemCollection.find({ status: 'Available' }).count()}
                                     </Statistic.Value>
-                                    <Statistic.Label>Items Are in <div> working Condition </div></Statistic.Label>
+                                    <Statistic.Label>Items Available</Statistic.Label>
                                 </Statistic>
                             </Statistic.Group>
                             </Segment>
                         </Grid.Column>
 
-                        <Grid.Column width={5}>
+                        <Grid.Column width={4}>
                         </Grid.Column>
 
 

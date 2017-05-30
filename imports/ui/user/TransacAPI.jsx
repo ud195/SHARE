@@ -26,8 +26,6 @@ export default class TransacAPI extends Component {
 
         return (
             <div>
-
-                
                 <Segment>
                 <Header><Icon name='arrow right' />Requests Sent</Header>
                 {requestsSentCount > 0 ?
@@ -41,7 +39,7 @@ export default class TransacAPI extends Component {
                 <Header><Icon name='arrow left' />Requests Received</Header>
                 {requestsReceivedCount > 0 ?
                        <Card.Group>
-                            {requestsReceived.map(request => this.renderReceived(request))}
+                            {requestsReceived.map(request => this.renderReceived(request))} 
                        </Card.Group>
                     : <Message size='huge'>You didn't receive any borrowal requests yet.</Message> }
                 </Segment>

@@ -12,11 +12,6 @@ export default class Message extends Component {
         this.state = {
         };
     };
-  
-  log()
-  {
-        console.log("USER SESSION" , Session.get('user'));
-  }
 
   removeMessage() {
     MessageCollection.remove(this.props.message._id);
@@ -24,7 +19,6 @@ export default class Message extends Component {
 
   render() {
       let {user} = this.props;
-      this.log();
       const source = 'http://www.jqueryscript.net/images/Simplest-Responsive-jQuery-Image-Lightbox-Plugin-simple-lightbox.jpg';
     return (
 

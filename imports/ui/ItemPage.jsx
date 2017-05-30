@@ -7,6 +7,7 @@ import request from 'superagent';
 import NotFoundPage from './NotFoundPage.jsx';
 import { ItemCollection } from '../collections/items.js';
 import { TransactionsCollection } from '../collections/transactions.js';
+import Comment from '../manage/MessageAPI.jsx';
 
 function ButtonsDisplayed(props) {
   const stat = props.stat;
@@ -41,6 +42,7 @@ export default class UserPage extends Component {
       type: "", //pickup or delivery
       requeststatus: "", // accepted/denied/received
       itemId: "", // item id 
+      itemName : '',
       sender: "",
       price: '',
       priority: '',
@@ -177,6 +179,11 @@ export default class UserPage extends Component {
                     <Header as={'h4'}> Description <Divider /> {item.description} </Header>
                   </Grid.Row>
 
+                  <Grid.Row>
+                    <Grid.Column width={16}>
+                    <Comment/>
+                    </Grid.Column>
+                  </Grid.Row>
 
                 </Grid>
                 : <NotFoundPage />}
@@ -188,7 +195,7 @@ export default class UserPage extends Component {
           </Grid.Row>
         </Grid>
 
-        <Dimmer page active={active} onClickOutside={this.handleHide}>
+        <Dimmer as={Image} active={active} onClickOutside={this.handleHide}>
 
           {item ?
             <div>
@@ -267,6 +274,9 @@ export default class UserPage extends Component {
     let item = ItemCollection.findOne({ "_id": this.props.params.id });
     if (item) {
       this.setState({ item: item });
+      this.setState({ itemId: item._id });
+      this.setState({ itemName : item.name});
+      this.setState({ receiver : item.owner});
     }
     console.log("items-->", item);
   }
@@ -274,6 +284,7 @@ export default class UserPage extends Component {
 
   onBorrowalSubmit(e) {
     e.preventDefault();
+    this.setState({ sender : Session.get('user').username});
     console.log("submited..", this.state);
     let request = {
       createdAt: new Date(),
@@ -281,8 +292,8 @@ export default class UserPage extends Component {
       type: this.state.type, //pickup or delivery
       requeststatus: 'sent', // accepted/denied/received
       itemId: this.state.itemId, // item id 
+      itemName: this.state.itemName, // item id 
       price: this.state.price,
-      sender: Session.get('user').username,
       priority: this.state.priority,
       error: this.state.error,
       receiver: this.state.receiver, // receiver 
@@ -291,7 +302,7 @@ export default class UserPage extends Component {
 
     TransactionsCollection.insert(
       {
-        receiver: request.receiver, sender: request.sender, item_id: request.item_id,
+        receiver: request.receiver, sender: request.sender, itemId: request.itemId, itemname : request.itemName,
         createdAt: request.createdAt, priority: request.priority, price: request.price,
         duration: request.duration, type: request.type, requeststatus: request.requeststatus
       }

@@ -28,12 +28,10 @@ export default class ItemsList extends Component {
                 <Container>
                     {itemsCount > 0 ?
                             <div>
-                            <Segment><Header><Icon name='database' />Listed Items</Header></Segment>
-                                <Card.Group>
+                            <Segment><Header><Icon name='object group' />Listed Items</Header></Segment>
                                 {items.map(item => this.renderItems(item))}
-                                </Card.Group> 
                                 </div>
-                        : <Message size='huge'>You don't have any uploaded items yet.<br />add now</Message>
+                        : <Message size='huge'>You don't have any uploaded items yet.</Message>
                     }
                 </Container>
             </div>
