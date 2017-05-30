@@ -71,7 +71,10 @@ export default class extends Component {
 
     return (
       <Grid>
-        <Grid.Column width={8}>
+                <Grid.Column width={7}>
+        </Grid.Column>
+
+        <Grid.Column width={3}>
           <Search
             loading={isLoading}
             onResultSelect={this.handleResultSelect}
@@ -81,13 +84,12 @@ export default class extends Component {
             {...this.props}
           />
         </Grid.Column>
-        <Grid.Column width={8}>
-          <Header>State</Header>
-          <pre>{JSON.stringify(this.state, null, 8)}</pre>
-          <Header>Options</Header>
-          <pre>{JSON.stringify(source, null, 2)}</pre>
+
+
+                <Grid.Column width={6}>
         </Grid.Column>
-      </Grid>  
+                </Grid>
+
     );
 
   }

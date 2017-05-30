@@ -4,10 +4,9 @@ import { Icon, Divider, Header, Table, CardGroup, Segment } from 'semantic-ui-re
 
 import { ItemCollection } from '../collections/items.js';
 
-//import Item from '../objects/ItemCardFull.jsx';
 import ItemCard from '../ui/items/Featured.jsx';
 
-class ClothingClass extends React.Component {
+class MotorsClass extends React.Component {
 
   renderItemsList() {
     return this.props.items.map((item) => (
@@ -19,15 +18,15 @@ class ClothingClass extends React.Component {
   render() {
     return (
       <div>
-          <Header color='red' as='h2'>
-            <Icon name='arrow down cart' color='red' />
-            <Header.Content>
-              Featured Clothing
+        <Header as='h2' color='orange'>
+            <Icon color='orange' name='car' />
+          <Header.Content>
+            Featured Motors
             </Header.Content>
-          </Header>
-          <CardGroup >
-            {this.renderItemsList()}
-          </CardGroup>
+        </Header>
+        <CardGroup >
+          {this.renderItemsList()}
+        </CardGroup>
       </div>
     );
   }
@@ -37,6 +36,6 @@ class ClothingClass extends React.Component {
 
 export default createContainer(() => {
   return {
-    items: ItemCollection.find({ category : 'Clothing'}, { sort: { Name: 1 }, limit: 6 }).fetch()
+    items: ItemCollection.find({ category: 'Motors' }, { sort: { Name: 1 }, limit: 6 }).fetch()
   };
-}, ClothingClass);
+}, MotorsClass);

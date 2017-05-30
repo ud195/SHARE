@@ -1,13 +1,24 @@
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { MessageCollection } from '../collections/messages.js';
-import { Header, Card, Input, Icon, Image, Button, Divider, Form, Segment, Table } from 'semantic-ui-react';
+import { Header, Grid, Card, TextArea, Input, Icon, Image, Button, Divider, Form, Segment, Table } from 'semantic-ui-react';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
-const colors = [
-  'teal'
-]
 
 import Message from '../objects/message.jsx';
+
+function ButtonsDisplayed(props) {
+  const submit = props.submit;
+  const gotologin = props.gotologin;
+
+if(Session.get('user') == null)
+{
+  return (<Button circular icon='content' onClick={gotologin} content='Login to comment'></Button>);
+}
+else 
+  return (<Button circular inverted icon='send' color='green' content='Submit' onClick = {submit}/>);
+}
+
 
 class MessageAPI extends React.Component {
 
@@ -19,7 +30,7 @@ class MessageAPI extends React.Component {
 		this.state = 
 		{
 			MessageContent: '',
-			MessageOwner :'Share-admin',
+			MessageOwner :'',
 		}
 
 		this.updateStateMessageContent = this.updateStateMessageContent.bind(this);
@@ -30,16 +41,25 @@ class MessageAPI extends React.Component {
 	updateStateMessageContent(event)     {this.setState({ MessageContent: event.target.value});}
 	updateStateMessageOwner(event)       {this.setState({MessageOwner : event.target.value});}
 
+	redirectlogin()
+	{
+		hashHistory.push('login');
+	}
 
 	handleSubmit() {
 		var Content = this.state.MessageContent;
-		var Owner = this.state.MessageOwner;
-		date = new Date();
+		var Owner = Session.get('user').username;
+		var date = new Date();
+		var dd = date.getDate();
+		var mm = date.getMonth() + 1;
+		var yy = date.getFullYear();
+		var hh = date.getHours();
+		var mn = date.getMinutes();
 		console.log("Content: " + this.state.MessageContent);
 		console.log("Owner: " + this.state.MessageOwner);
-		console.log("Status: " + date);
+		console.log("Status: " + date.toString);
 
-		MessageCollection.insert({Content,Owner,date});
+		MessageCollection.insert({Content,Owner,dd,mm,yy,hh,mn});
 	}
 
 	renderMessageList ()
@@ -52,36 +72,28 @@ class MessageAPI extends React.Component {
 	render() {
 		return (
 			<div>
-				<Segment.Group>
-					<Segment>
-						<Header as='h2'>
-							<Icon name='send outline' />
-							<Header.Content>
-								Leave a Comment
-							</Header.Content>
-						</Header>
-					</Segment>
+						
+						<Grid centered columns={3}>
+							<Grid.Row>
+							<Grid.Column width ={2}>
+								<Icon name='comment' color='green' size='big' />
+							</Grid.Column>
 
-					<Segment.Group horizontal>
-						<Segment inverted color='teal' raised circular>
+							<Grid.Column width={11}>
 							<Form inverted size='small'>
-
 								<Form.Field>
-									<label>Message Content</label>
-									<Input type = "text" value = {this.state.MessageContent} onChange = {this.updateStateMessageContent} />            
+									<TextArea color='green' value={this.props.MessageContent} onChange = {this.updateStateMessageContent} autoHeight />
 								</Form.Field>
-								<Divider hidden />
-
-								<Form.Field>
-									<label>Message Owner</label>
-									<Input icon = "user" type = "text" value = {this.state.MessageOwner} onChange = {this.updateStateMessageOwner} />
-								</Form.Field>
-								<Divider hidden />
 							</Form>
-							<Button icon='send' color='blue' content='Submit' onClick = {this.handleSubmit}/>
-						</Segment>
-					</Segment.Group>
-				</Segment.Group>
+							</Grid.Column>
+							
+							<Grid.Column width={3}>
+							<ButtonsDisplayed submit={this.handleSubmit.bind(this)} gotologin={this.redirectlogin.bind(this)} />
+							</Grid.Column>
+							</Grid.Row>
+						</Grid>
+
+
 
 				<Segment>
 					<Header as='h2'>
@@ -97,6 +109,8 @@ class MessageAPI extends React.Component {
 			</div>
 		);
 	}
+
+	
 }
 
 MessageAPI.propTypes = {

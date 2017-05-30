@@ -19,15 +19,15 @@ class ElectronicsClass extends React.Component {
   render() {
     return (
       <div>
-          <Header as='h2'>
-            <Icon name='star' color='yellow' />
-            <Header.Content>
-              Featured Items
+        <Header as='h2' color='blue'>
+            <Icon color='blue' name='desktop' />
+          <Header.Content>
+            Featured Electronics
             </Header.Content>
-          </Header>
-          <CardGroup >
-            {this.renderItemsList()}
-          </CardGroup>
+        </Header>
+        <CardGroup >
+          {this.renderItemsList()}
+        </CardGroup>
       </div>
     );
   }
@@ -37,6 +37,6 @@ class ElectronicsClass extends React.Component {
 
 export default createContainer(() => {
   return {
-    items: ItemCollection.find({ category : 'Electronics'}, { sort: { Name: 1 }, limit: 6 }).fetch()
+    items: ItemCollection.find({ category: 'Electronics' }, { sort: { Name: 1 }, limit: 6 }).fetch()
   };
 }, ElectronicsClass);

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Image, Table, Divider, Grid, CardGroup, Segment, Statistic } from 'semantic-ui-react'
+import { Image, Icon, Table, Divider, Grid, CardGroup, Segment, Statistic } from 'semantic-ui-react'
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import { ItemCollection } from '../collections/items.js';
 
@@ -30,21 +30,28 @@ class ItemViewAll extends React.Component {
                             <Statistic.Group>
                                 <Statistic>
                                     <Statistic.Value>
-                                        <Image src='https://www.moh.io/box/mohiomap-boxbeta/images/privacy/database.svg' className='circular inline' />
+                                        <Icon name='database'/>
                                         {ItemCollection.find().count()}
                                     </Statistic.Value>
                                     <Statistic.Label>Items On The Network</Statistic.Label>
                                 </Statistic>
                                 <Statistic>
                                     <Statistic.Value>
-                                        <Image src='https://www.moh.io/box/mohiomap-boxbeta/images/privacy/database.svg' className='circular inline' />
+                                        <Icon name='database'/>
                                         {ItemCollection.find({ price: 0 }).count()}
                                     </Statistic.Value>
                                     <Statistic.Label>Items Are Free</Statistic.Label>
                                 </Statistic>
                                 <Statistic>
                                     <Statistic.Value>
-                                        <Image src='https://www.moh.io/box/mohiomap-boxbeta/images/privacy/database.svg' className='circular inline' />
+                                        <Icon name='wrench'/>
+                                        {ItemCollection.find({ condition: 'working' }).count()}
+                                    </Statistic.Value>
+                                    <Statistic.Label>Items Are in <div> working Condition </div></Statistic.Label>
+                                </Statistic>
+                                <Statistic>
+                                    <Statistic.Value>
+                                        <Icon name='database'/>
                                         {ItemCollection.find({ condition: 'working' }).count()}
                                     </Statistic.Value>
                                     <Statistic.Label>Items Are in <div> working Condition </div></Statistic.Label>

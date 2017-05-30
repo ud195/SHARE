@@ -39,23 +39,17 @@ export default class extends Component {
         console.log("props>>", this.props);
         console.log("id>>", id);
         //console.log("user>>", user);
-        return (
-            <div>
-                <Grid.Column verticalAlign="middle">
-                    <Popup
+        return (     <Card>
+                         <Popup
                         trigger={<a href={`#/items/${item._id}/edit`}>
                             <Icon inverted circular name='edit' color="green" />
                         </a>}
                         content="Edit Item"
                         basic
                     />
-
-                </Grid.Column>
-                <Grid.Column>
-                    <Card centered>
-                        <Popup
+                        <Popup position='top right'
                             trigger={<Image src={item.imageUrl} size="medium" />}
-                            content={item.name}
+                            content={item.status}
                             basic
                         />
                         <Card.Content>
@@ -75,8 +69,7 @@ export default class extends Component {
                   </Button>
                  </Button.Group>
                     </Card>
-                </Grid.Column>
-            </div>
+                
         )
     }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Menu, Segment, Header, Card, Icon, Image, Input, Button, List, Item, ItemContent } from 'semantic-ui-react';
+import { Grid, Divider, Menu, Segment, Header, Card, Icon, Image, Input, Button, List, Item, ItemContent } from 'semantic-ui-react';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import User from './user/User.jsx';
 import ItemsList from './items/List.jsx'; 
@@ -36,15 +36,17 @@ export default class extends Component {
 
                     <Grid.Column stretched width={12}>
                         <Segment>
-                            <Header as='h3'>
-                                <a href={`#/items/new`}>
-                                    <Icon.Group size='large'>
-                                        <Icon name='database' />
-                                        <Icon corner name='add' />
-                                    </Icon.Group>
-                                    Dashboard 
-                                 </a>
-                            </Header>
+                            <Grid>
+                            <Grid.Row>
+                            <Grid.Column width={8}>
+                            <Header as='h3' color='violet'> <Icon color='violet' name='dashboard'/> Dashboard </Header>
+                            <Divider hidden/>
+                            </Grid.Column> 
+                            <Grid.Column width={8}>
+                            <Header floated='left' as='h3'> <a href={`#/items/new`}><Icon name='plus' />Add item</a></Header>
+                            </Grid.Column>
+                            </Grid.Row>
+                            </Grid>
                             {(activeItem == 'Profile') ? <User user={user} /> : <p></p>}
                             {(activeItem == 'Items') ? <ItemsList user={user} /> : <p></p>}
                             {(activeItem == 'Requests') ? <TransacAPI user = {user}/> :<p></p>}

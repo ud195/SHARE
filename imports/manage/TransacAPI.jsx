@@ -22,7 +22,7 @@ export default class TransacAPI extends Component {
                 <Container>
                     {requestsCount > 0 ?
                         <Segment.Group>
-                            <Segment><Header><Icon name='database' />FUCK</Header></Segment>
+                            <Segment><Header><Icon name='database'/>db</Header></Segment>
                             <Grid.Column>
                                 {requests.map(request => this.renderRequests(request))}
                             </Grid.Column>

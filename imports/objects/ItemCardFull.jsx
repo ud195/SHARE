@@ -118,6 +118,7 @@ redirectedit()
                 <Card.Header>
                   {item.name}
                 </Card.Header>
+                <Divider />
                 <span className='date'>
                   Condition : {item.condition}
                 </span>

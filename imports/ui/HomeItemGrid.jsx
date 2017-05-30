@@ -19,9 +19,9 @@ class ItemGrid extends React.Component {
   render() {
     return (
       <div>
-          <Header as='h2'>
+          <Header color='yellow' as='h2'>
             <Icon name='star' color='yellow' />
-            <Header.Content>
+            <Header.Content >
               Featured Items
             </Header.Content>
           </Header>

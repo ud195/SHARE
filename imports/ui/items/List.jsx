@@ -27,12 +27,12 @@ export default class ItemsList extends Component {
             <div>
                 <Container>
                     {itemsCount > 0 ?
-                        <Segment.Group>
+                            <div>
                             <Segment><Header><Icon name='database' />Listed Items</Header></Segment>
-                            <Grid.Column>
+                                <Card.Group>
                                 {items.map(item => this.renderItems(item))}
-                            </Grid.Column>
-                        </Segment.Group>
+                                </Card.Group> 
+                                </div>
                         : <Message size='huge'>You don't have any uploaded items yet.<br />add now</Message>
                     }
                 </Container>
@@ -88,9 +88,7 @@ export default class ItemsList extends Component {
         // <Accordion key={item._id} panels={panels} exclusive={false} fluid />
         return (
             <div key={item._id}>
-                <Segment>
                     <ItemComponent key={item._id} item={item} />
-                </Segment>
             </div>
         );
     }

@@ -5,6 +5,7 @@ import request from 'superagent';
 import FormData from 'form-data';
 import { ItemCollection } from '../../collections/items.js';
 import { select, Grid, Container, TextArea, Modal, Header, Message, Card, Input, Icon, Image, Button, Divider, Form, Segment } from 'semantic-ui-react'
+import { Session } from 'meteor/session';
 
 export default class extends React.Component {
     constructor(props) {
@@ -26,13 +27,18 @@ export default class extends React.Component {
                 {item ?
                     <Container text>
                         <Segment inverted color='green' padded="very">
-                            <Header as='h3'>
-                                <Icon.Group size='large'>
-                                    <Icon name='database' />
-                                    <Icon corner name='add' />
-                                </Icon.Group>
-                                Upload Item
-                        </Header>
+                          <Grid padded>
+                            <Grid.Row>
+                            <Grid.Column  color='green' width={10}>
+                            <Header inverted  floated='left' as='h3'> <Icon name='add square' />Add item</Header>
+                            </Grid.Column>
+                            <Grid.Column textAlign='right' width={6}>
+                            <Header  as='h3'>
+                                <a  href={`#/dashboard/${Session.get("user").username}`}>
+                             <Icon  name='dashboard'/> Dashboard </a></Header>
+                            </Grid.Column> 
+                            </Grid.Row>
+                            </Grid>
 
                             <Segment.Group>
                                 <Segment compact raised >
@@ -100,8 +106,8 @@ export default class extends React.Component {
                                                 <option value='Motors'>Motors</option>
                                             </select>
                                         </Form.Field>
-
-                                        <Button icon='save' color='blue' content='Update' onClick={this.onSubmit.bind(this)} />
+                                        <Divider />
+                                        <Button size='large' fluid icon='save' color='green' content='Upload' onClick={this.onSubmit.bind(this)} />
                                     </Form>
                                 </Segment>
                             </Segment.Group>
