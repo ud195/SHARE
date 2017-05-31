@@ -20,6 +20,23 @@ function StatusColor(props) {
     return <Label  color='yellow'>{text}</Label>
 }
 
+function renderContact(props){
+    const contactNumber = props.contactNumber;
+    const contactEmail = props.contactEmail;
+    const checkStat = porps.checkStat;
+
+    if(checkStat == "Accepted")
+    {
+        return <Header as='h4' color='blue'> Number : {contactNumber} </Header>;
+    }
+    else 
+    {
+        return <Header as='h4' color='blue'> Number : not available yet </Header>;
+    }
+    
+
+}
+
 export default class extends Component {
     constructor(props) {
         super(props);
@@ -36,6 +53,7 @@ export default class extends Component {
     render() {
         let { error } = this.state;
         let { req } = this.props;
+
         console.log("state>>", this.state);
         console.log("props>>", this.props);
 
@@ -54,9 +72,8 @@ export default class extends Component {
                     </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                    <div className='ui two buttons'>
                         <Button color='black' onClick={this.updateWithdraw.bind(this)} >Withdraw</Button>
-                    </div>
+                        <renderContact checkStat={req.requeststatus} contactNumber={'000000'} />
                 </Card.Content>
             </Card>
 

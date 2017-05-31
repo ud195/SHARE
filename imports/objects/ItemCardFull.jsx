@@ -67,7 +67,7 @@ export default class extends Component {
 HandleClickBorrow()
 {
   this.LoadItem();
-  this.setState({active : true});
+  this.setState({active1 : true});
 }
 
 
@@ -94,12 +94,15 @@ redirectlogin()
 
 handleHide()
 {
+  this.setState({active1 : false});
   this.setState({active : false});
+
 }
 
 handleHide2()
 {
   this.setState({active2 : false});
+  this.setState({active : false});
 }
 
 redirectedit()
@@ -112,7 +115,8 @@ redirectedit()
 
 
   render() {
-    const { active } = this.state;
+    const {active} = this.state;
+    const { active1 } = this.state;
     const {active2} = this.state;
     let { error } = this.state;
     let { item } = this.props;
@@ -122,7 +126,7 @@ redirectedit()
     return (
 
             <Card color='green'> 
-            <Dimmer.Dimmable as={Card} dimmed={active}>
+            <Dimmer.Dimmable blurring as={Card} dimmed={active}>
 
             <StatusColor stat={item.status} text={item.status} />
               <Image src={item.imageUrl} size='medium' />
@@ -156,11 +160,10 @@ redirectedit()
                 </Button.Group>
               </Card.Content>
 
-              <Dimmer active={active2} inverted onClickOutside={this.handleHide2}>
+              <Dimmer  active={active2} onClickOutside={this.handleHide2}>
                 
                 <Grid>
                   <Grid.Row>
-                    <Grid.Column width={0}></Grid.Column>
 
                     <Grid.Column width={7}>
                       <Grid.Row>
@@ -171,7 +174,7 @@ redirectedit()
                       <Grid.Row>
                       </Grid.Row>
                       <Grid.Column width={16}>
-                      <ReactCountdownClock seconds={4*24*3600} color="#D35400" alpha={4.0} size={150}/>
+                      <ReactCountdownClock seconds={4*24*3600} color="#ffffff" alpha={4.0} size={150}/>
                       </Grid.Column>
                       </Grid.Row>
                       <Divider hidden/>
@@ -189,7 +192,7 @@ redirectedit()
                       <Divider hidden />
                       <Divider hidden />
                       <Grid.Column width={16}>  
-                      <Button onClick={this.handleHide2.bind(this)} color='red' icon='cross'> OK </Button>
+                      <Button  icon='remove' onClick={this.handleHide2.bind(this)} color='red' content="OK"/>
                       </Grid.Column>  
                       </Grid.Row>
                       </Grid.Column>
@@ -201,7 +204,7 @@ redirectedit()
 
                         
               
-          <Dimmer active={active} onClickOutside={this.handleHide}>
+          <Dimmer active={active1} onClickOutside={this.handleHide}>
             {item ?
               <div>
                 <Form size='small'>
@@ -241,7 +244,7 @@ redirectedit()
                   <Button.Group>
                   <Button onClick={this.onBorrowalSubmit.bind(this)} icon='mail' color='blue' content='Submit' />
                   <Button.Or content='or' />
-                  <Button onClick={this.handleHide.bind(this)} icon='remove' color='red' content='Cancel' />
+                  <Button  onClick={this.handleHide.bind(this)} icon='remove' color='red' content='Cancel' />
                   </Button.Group>
                 </Form>
               </div>
