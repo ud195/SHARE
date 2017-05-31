@@ -67,16 +67,16 @@ class ItemViewAll extends React.Component {
                     </Grid.Row>
 
                     <Grid.Row columns={3}>
-                        <Grid.Column width={4}>
+                        <Grid.Column width={2}>
                         </Grid.Column>
 
-                        <Grid.Column width={10}>
+                        <Grid.Column width={13}>
                             <CardGroup>
                                 {this.renderItemsList()}
                             </CardGroup>
                         </Grid.Column>
 
-                        <Grid.Column width={2}>
+                        <Grid.Column width={1}>
                         </Grid.Column>
 
                     </Grid.Row>

@@ -8,6 +8,7 @@ import NotFoundPage from './NotFoundPage.jsx';
 import { ItemCollection } from '../collections/items.js';
 import { TransactionsCollection } from '../collections/transactions.js';
 import Comment from '../manage/MessageAPI.jsx';
+import ReactCountdownClock from 'react-countdown-clock';
 
 function ButtonsDisplayed(props) {
   const stat = props.stat;
@@ -15,6 +16,7 @@ function ButtonsDisplayed(props) {
   const gotoedit = props.gotoedit;
   const checkuser = props.checkuser;
   const gotologin = props.gotologin;
+  const showclock = props.showclock;
 
   if (Session.get('user') == null) {
     return (<Button icon='content' onClick={gotologin} content='Login to borrow'></Button>);
@@ -23,7 +25,7 @@ function ButtonsDisplayed(props) {
     return (<Button icon='content' onClick={gotoedit} color='violet' content='Edit'></Button>);
   }
   else if (stat == 'Not-Available') {
-    return (<Button onClick={direct} icon='question' color='yellow' content='Availability'></Button>);
+    return (<Button onClick={showclock} icon='question' color='yellow' content='Availability'></Button>);
   }
 
   return (<Button onClick={direct} icon='add to cart' color='green' content='Borrow'></Button>);
@@ -66,15 +68,23 @@ export default class UserPage extends Component {
     this.setState({ active: true });
   }
 
+  HandleAvail() {
+    this.LoadItem();
+    this.setState({ active2: true });
+  }
 
   handleHide() {
     this.setState({ active: false });
   }
 
+  handleHide2()
+  {
+        this.setState({ active2: false });
+  }
 
   render() {
     const {stat} = this.props;
-    const { active } = this.state;
+    const { active, active2 } = this.state;
     let { item, error } = this.state;
     console.log("state>>", this.state);
     return (
@@ -167,7 +177,9 @@ export default class UserPage extends Component {
                             </Header.Content>
                           </Header>
                           <Divider />
-                          <ButtonsDisplayed checkuser={item.owner} stat={item.status} gotologin={this.redirectlogin.bind(this)} direct={this.HandleClickBorrow.bind(this)} gotoedit={this.redirectedit.bind(this)} />
+                          <ButtonsDisplayed checkuser={item.owner} stat={item.status}
+                           gotologin={this.redirectlogin.bind(this)} showclock={this.HandleAvail.bind(this)}
+                           direct={this.HandleClickBorrow.bind(this)} gotoedit={this.redirectedit.bind(this)} />
                         </Grid.Column>
                       </Grid.Row>
 
@@ -195,8 +207,75 @@ export default class UserPage extends Component {
           </Grid.Row>
         </Grid>
 
-        <Dimmer as={Image} active={active} onClickOutside={this.handleHide}>
+              <Dimmer  active={active2} onClickOutside={this.handleHide2}>
+                
+                <Grid>
+                  <Grid.Row>
 
+                    <Grid.Column width={7}>
+                      <Grid.Row >
+                      <Grid.Column width={16}>  
+                      <Header color='red' as='h1' > Available in </Header>
+                      </Grid.Column>
+
+                      <Grid.Row columns={2}>
+                      </Grid.Row>
+                      <Grid.Column width = {6} >
+                        </Grid.Column>
+                      <Grid.Column width={10}>
+                      <ReactCountdownClock seconds={10000} color="#ffffff" alpha={4.0} size={400}/>
+                      </Grid.Column>
+                      </Grid.Row>
+                      <Divider hidden/>
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+
+                      <Grid.Row>
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Divider hidden />
+                      <Grid.Column width={16}>  
+                      <Button  icon='remove' size='huge' onClick={this.handleHide2.bind(this)} color='red' content="OK"/>
+                      </Grid.Column>  
+                      </Grid.Row>
+                      </Grid.Column>
+
+                      <Grid.Column width={9}></Grid.Column>
+                  </Grid.Row>
+                  </Grid>
+              </Dimmer>     
+
+
+        <Dimmer active={active} onClickOutside={this.handleHide}>
+
+          <Grid>
+          
+          <Grid.Row>
+
+          <Grid.Column width={3}>
+          </Grid.Column>
+
+          <Grid.Column width={10}>
           {item ?
             <div>
               <Form size='small'>
@@ -243,6 +322,15 @@ export default class UserPage extends Component {
 
             :
             <h1> error mounting  </h1>}
+            </Grid.Column>
+
+            <Grid.Column width={3}>
+            </Grid.Column>
+          
+
+            </Grid.Row>
+
+            </Grid>
 
         </Dimmer>
 

@@ -98,7 +98,7 @@ class MessageAPI extends Component {
 
 				<Segment>
 					<Header as='h2'>
-						<Icon name='send outline' />
+						<Icon name='talk' />
 						<Header.Content>
 							Comments
 						</Header.Content>
@@ -110,23 +110,6 @@ class MessageAPI extends Component {
 			</div>
 		);
 	}
-
-    componentDidMount() 
-	{
-				this.LoadItem();
-	}
-
-  LoadItem() {
-    let item = ItemCollection.findOne({ "_id": this.props.item._id });
-    if (item) {
-      this.setState({ item: item });
-      console.log("Item Mount ::: >>", item);
-    }
-    else {
-      this.setState({ error: "Error>>>" });
-    }
-  }
-
 }
 
 

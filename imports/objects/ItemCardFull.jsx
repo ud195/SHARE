@@ -12,13 +12,13 @@ function StatusColor(props) {
   const stat = props.stat;
   const text = props.text;
     if (stat == 'Not-Available') {
-    return <Label ribbon color='red'>{text}</Label>;
+    return <Label size='large' color='red'>{text}</Label>;
   }
   if (stat == 'Available') {
-    return <Label ribbon color='green'>{text}</Label>;
+    return <Label size='large' color='green'>{text}</Label>;
   }
 
-  return <Label ribbon color='yellow'>{text}</Label>
+  return <Label size='large' color='yellow'>{text}</Label>
 }
 
 function ButtonsDisplayed(props) {
@@ -120,13 +120,15 @@ redirectedit()
     const {active2} = this.state;
     let { error } = this.state;
     let { item } = this.props;
+    let { transac } = this.props;
+    
     console.log("state>>", this.state);
     console.log("props>>", this.props);
     //console.log("user>>", user);
     return (
 
             <Card color='green'> 
-            <Dimmer.Dimmable blurring as={Card} dimmed={active}>
+            <Dimmer.Dimmable as={Card} dimmed={active}>
 
             <StatusColor stat={item.status} text={item.status} />
               <Image src={item.imageUrl} size='medium' />
@@ -166,15 +168,15 @@ redirectedit()
                   <Grid.Row>
 
                     <Grid.Column width={7}>
-                      <Grid.Row>
+                      <Grid.Row color='red'>
                       <Grid.Column width={16}>  
-                      <Header as='h3' > Available in </Header>
+                      <Header color='red' as='h3' > Available in </Header>
                       </Grid.Column>
 
                       <Grid.Row>
                       </Grid.Row>
                       <Grid.Column width={16}>
-                      <ReactCountdownClock seconds={4*24*3600} color="#ffffff" alpha={4.0} size={150}/>
+                      <ReactCountdownClock seconds={10000} color="#ffffff" alpha={4.0} size={150}/>
                       </Grid.Column>
                       </Grid.Row>
                       <Divider hidden/>
@@ -241,11 +243,7 @@ redirectedit()
                       onChange={this.onPriceChange.bind(this)}
                     />
                   </Form.Field>
-                  <Button.Group>
                   <Button onClick={this.onBorrowalSubmit.bind(this)} icon='mail' color='blue' content='Submit' />
-                  <Button.Or content='or' />
-                  <Button  onClick={this.handleHide.bind(this)} icon='remove' color='red' content='Cancel' />
-                  </Button.Group>
                 </Form>
               </div>
 
@@ -278,7 +276,14 @@ redirectedit()
     if (item) {
       this.setState({ item: item });
       this.setState({ receiver: item.owner });
-      this.setState({ sender : Session.get('user').username});
+      if(Session.get('user') == null)
+      {
+        this.setState({ sender : null});
+      }
+      else
+      {
+        this.setState({ sender : Session.get('user').username});
+      }
       this.setState({ itemId: item._id });
       this.setState({ itemName : item.name});
       console.log("Item Mount ::: >>", item);
