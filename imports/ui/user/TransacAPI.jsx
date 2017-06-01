@@ -28,6 +28,7 @@ export default class TransacAPI extends Component {
             <div>
                 <Segment>
                 <Header><Icon name='arrow right' />Requests Sent</Header>
+                <Divider/>
                 {requestsSentCount > 0 ?
                        <Card.Group>
                             {requestsSent.map(req => this.renderSent(req))}
@@ -37,6 +38,7 @@ export default class TransacAPI extends Component {
 
                 <Segment>
                 <Header><Icon name='arrow left' />Requests Received</Header>
+                <Divider/>
                 {requestsReceivedCount > 0 ?
                        <Card.Group>
                             {requestsReceived.map(request => this.renderReceived(request))} 

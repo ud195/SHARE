@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Input, Grid, Label, Menu, Icon, Segment, Header } from 'semantic-ui-react'
+import { Input, Button, Grid, Label, Menu, Icon, Segment, Header } from 'semantic-ui-react'
 import ItemGrid from '../ui/HomeItemGrid.jsx';
 import ClothingClass from '../categories/clothing.jsx';
 import ElectronicsClass from '../categories/electronics.jsx';
@@ -95,6 +95,32 @@ class HomeSideMenu extends React.Component {
         </Menu.Item>
 
           </Menu>
+
+          <Grid.Column width={2}>
+            <Header color='green' as='h2' icon>
+              <Icon name='heart' />
+              Donate to charity
+              <Header.Subheader>
+                Please consider donating to charity, <br/> thank you.
+              </Header.Subheader>
+            </Header>
+            <Grid columns={3}>
+              <Grid.Row >
+              <Grid.Column width={5}>
+              <Input fluid icon='dollar' size='large' />
+              </Grid.Column>
+              <Grid.Column width={5}>
+              <Button content='Donate' size='large' inverted color='green'  fluid/>
+              </Grid.Column>
+              <Grid.Column width={6}>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+        </Grid.Column>
+        
+        <Grid.Column width={12}>
+        </Grid.Column>
+
         </Grid.Column>
 
         <Grid.Column width={11}>

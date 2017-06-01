@@ -44,7 +44,7 @@ export default class UserPage extends Component {
       type: "", //pickup or delivery
       requeststatus: "", // accepted/denied/received
       itemId: "", // item id 
-      itemName : '',
+      itemName: '',
       sender: "",
       price: '',
       priority: '',
@@ -77,26 +77,44 @@ export default class UserPage extends Component {
     this.setState({ active: false });
   }
 
-  handleHide2()
-  {
-        this.setState({ active2: false });
+  handleHide2() {
+    this.setState({ active2: false });
   }
 
   render() {
-    const {stat} = this.props;
+    const { stat } = this.props;
     const { active, active2 } = this.state;
     let { item, error } = this.state;
     console.log("state>>", this.state);
     return (
       <Dimmer.Dimmable dimmed={active}>
+        {item ?
+          <Grid>
 
-        <Grid>
+            <Grid.Row>
 
-          <Grid.Row columns={3}>
-            <Grid.Column width={3}>
-            </Grid.Column>
-            <Grid.Column width={10}>
-              {item ?
+              <Grid.Column width={3}>
+              </Grid.Column>
+
+              <Grid.Column width={10}>
+                <Header as={'h3'}>
+                  <Icon name='registered' />
+                  <Header.Content>
+                   {item.name}
+                  </Header.Content>
+                </Header>
+                <Divider />
+              </Grid.Column>
+
+              <Grid.Column width={3}>
+              </Grid.Column>
+
+            </Grid.Row>
+
+            <Grid.Row columns={3}>
+              <Grid.Column width={3}>
+              </Grid.Column>
+              <Grid.Column width={10}>
                 <Grid divided='vertically'>
                   <Grid.Row columns={2}>
 
@@ -105,7 +123,7 @@ export default class UserPage extends Component {
                     </Grid.Column>
 
                     <Grid.Column width={8}>
-                      <Grid.Row columns={6} color='violet'>
+                      <Grid.Row columns={5} color='violet'>
                         <Grid.Column width={2} color='brown'>
                           <Header as={'h4'} >
                             <Icon name='magic' />
@@ -115,15 +133,7 @@ export default class UserPage extends Component {
                           </Header>
                         </Grid.Column>
                         <Divider />
-                        <Grid.Column width={2} color='brown'>
-                          <Header as={'h4'}>
-                            <Icon name='registered' />
-                            <Header.Content>
-                              Name : {item.name}
-                            </Header.Content>
-                          </Header>
-                        </Grid.Column>
-                        <Divider />
+                        
                         <Grid.Column width={2} color='brown'>
                           <Header as={'h4'}>
                             <Icon name='configure' />
@@ -178,8 +188,8 @@ export default class UserPage extends Component {
                           </Header>
                           <Divider />
                           <ButtonsDisplayed checkuser={item.owner} stat={item.status}
-                           gotologin={this.redirectlogin.bind(this)} showclock={this.HandleAvail.bind(this)}
-                           direct={this.HandleClickBorrow.bind(this)} gotoedit={this.redirectedit.bind(this)} />
+                            gotologin={this.redirectlogin.bind(this)} showclock={this.HandleAvail.bind(this)}
+                            direct={this.HandleClickBorrow.bind(this)} gotoedit={this.redirectedit.bind(this)} />
                         </Grid.Column>
                       </Grid.Row>
 
@@ -193,144 +203,144 @@ export default class UserPage extends Component {
 
                   <Grid.Row>
                     <Grid.Column width={16}>
-                    <Comment/>
+                      <Comment />
                     </Grid.Column>
                   </Grid.Row>
 
                 </Grid>
-                : <NotFoundPage />}
 
 
-            </Grid.Column >
-            <Grid.Column width={3}>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+              </Grid.Column >
+              <Grid.Column width={3}>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+          : <NotFoundPage />}
 
-              <Dimmer  active={active2} onClickOutside={this.handleHide2}>
-                
-                <Grid>
-                  <Grid.Row>
+        <Dimmer active={active2} onClickOutside={this.handleHide2}>
 
-                    <Grid.Column width={7}>
-                      <Grid.Row >
-                      <Grid.Column width={16}>  
-                      <Header color='red' as='h1' > Available in </Header>
-                      </Grid.Column>
+          <Grid>
+            <Grid.Row>
 
-                      <Grid.Row columns={2}>
-                      </Grid.Row>
-                      <Grid.Column width = {6} >
-                        </Grid.Column>
-                      <Grid.Column width={10}>
-                      <ReactCountdownClock seconds={10000} color="#ffffff" alpha={4.0} size={400}/>
-                      </Grid.Column>
-                      </Grid.Row>
-                      <Divider hidden/>
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
+              <Grid.Column width={7}>
+                <Grid.Row >
+                  <Grid.Column width={16}>
+                    <Header color='red' as='h1' > Available in </Header>
+                  </Grid.Column>
 
-                      <Grid.Row>
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Divider hidden />
-                      <Grid.Column width={16}>  
-                      <Button  icon='remove' size='huge' onClick={this.handleHide2.bind(this)} color='red' content="OK"/>
-                      </Grid.Column>  
-                      </Grid.Row>
-                      </Grid.Column>
-
-                      <Grid.Column width={9}></Grid.Column>
+                  <Grid.Row columns={2}>
                   </Grid.Row>
-                  </Grid>
-              </Dimmer>     
+                  <Grid.Column width={6} >
+                  </Grid.Column>
+                  <Grid.Column width={10}>
+                    <ReactCountdownClock seconds={10000} color="#ffffff" alpha={4.0} size={400} />
+                  </Grid.Column>
+                </Grid.Row>
+                <Divider hidden />
+                <Divider hidden />
+                <Divider hidden />
+                <Divider hidden />
+                <Divider hidden />
+                <Divider hidden />
+                <Divider hidden />
+
+                <Grid.Row>
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Grid.Column width={16}>
+                    <Button icon='remove' size='huge' onClick={this.handleHide2.bind(this)} color='red' content="OK" />
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid.Column>
+
+              <Grid.Column width={9}></Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Dimmer>
 
 
         <Dimmer active={active} onClickOutside={this.handleHide}>
 
           <Grid>
-          
-          <Grid.Row>
 
-          <Grid.Column width={3}>
-          </Grid.Column>
+            <Grid.Row>
 
-          <Grid.Column width={10}>
-          {item ?
-            <div>
-              <Form size='small'>
-                <Form.Field>
-                  <Header as='h4' block>Duration of borrowal (days)</Header>
-                  <Input type="text" placeholder="e.g. 4"
-                    value={this.state.duration}
-                    onChange={this.onDurationChange.bind(this)}
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <Header as='h4' block>Request Priority</Header>
-                  <select value={this.state.priority}
-                    onChange={this.onRequestPriorityChange.bind(this)}
-                  >
-                    <option value='high'>High</option>
-                    <option value='medium'>Medium</option>
-                    <option value='low'>Low</option>
-                  </select>
-                </Form.Field>
-                <Form.Field>
-                  <Header as='h4' block>Exchange Type</Header>
-                  <select value={this.state.type}
-                    onChange={this.onExchangeTypeChange.bind(this)}
-                  >
-                    <option value='delivery'>Delivery</option>
-                    <option value='pickup'>Pickup</option>
-                  </select>
-                </Form.Field>
-                <Form.Field>
-                  <Header as='h4' block>Proposed Price ($)</Header>
-                  <Input type="text" placeholder="e.g. 4"
-                    value={this.state.price}
-                    onChange={this.onPriceChange.bind(this)}
-                  />
-                </Form.Field>
-                <Button.Group>
-                  <Button onClick={this.onBorrowalSubmit.bind(this)} icon='mail' color='blue' content='Submit' />
-                  <Button.Or content='or' />
-                  <Button onClick={this.handleHide.bind(this)} icon='remove' color='red' content='Cancel' />
-                </Button.Group>
-              </Form>
-            </div>
+              <Grid.Column width={3}>
+              </Grid.Column>
 
-            :
-            <h1> error mounting  </h1>}
-            </Grid.Column>
+              <Grid.Column width={10}>
+                {item ?
+                  <div>
+                    <Form size='small'>
+                      <Form.Field>
+                        <Header as='h4' block>Duration of borrowal (days)</Header>
+                        <Input type="text" placeholder="e.g. 4"
+                          value={this.state.duration}
+                          onChange={this.onDurationChange.bind(this)}
+                        />
+                      </Form.Field>
+                      <Form.Field>
+                        <Header as='h4' block>Request Priority</Header>
+                        <select value={this.state.priority}
+                          onChange={this.onRequestPriorityChange.bind(this)}
+                        >
+                          <option value='high'>High</option>
+                          <option value='medium'>Medium</option>
+                          <option value='low'>Low</option>
+                        </select>
+                      </Form.Field>
+                      <Form.Field>
+                        <Header as='h4' block>Exchange Type</Header>
+                        <select value={this.state.type}
+                          onChange={this.onExchangeTypeChange.bind(this)}
+                        >
+                          <option value='delivery'>Delivery</option>
+                          <option value='pickup'>Pickup</option>
+                        </select>
+                      </Form.Field>
+                      <Form.Field>
+                        <Header as='h4' block>Proposed Price ($)</Header>
+                        <Input type="text" placeholder="e.g. 4"
+                          value={this.state.price}
+                          onChange={this.onPriceChange.bind(this)}
+                        />
+                      </Form.Field>
+                      <Button.Group>
+                        <Button onClick={this.onBorrowalSubmit.bind(this)} icon='mail' color='blue' content='Submit' />
+                        <Button.Or content='or' />
+                        <Button onClick={this.handleHide.bind(this)} icon='remove' color='red' content='Cancel' />
+                      </Button.Group>
+                    </Form>
+                  </div>
 
-            <Grid.Column width={3}>
-            </Grid.Column>
-          
+                  :
+                  <h1> error mounting  </h1>}
+              </Grid.Column>
+
+              <Grid.Column width={3}>
+              </Grid.Column>
+
 
             </Grid.Row>
 
-            </Grid>
+          </Grid>
 
         </Dimmer>
 
@@ -363,8 +373,8 @@ export default class UserPage extends Component {
     if (item) {
       this.setState({ item: item });
       this.setState({ itemId: item._id });
-      this.setState({ itemName : item.name});
-      this.setState({ receiver : item.owner});
+      this.setState({ itemName: item.name });
+      this.setState({ receiver: item.owner });
     }
     console.log("items-->", item);
   }
@@ -372,7 +382,7 @@ export default class UserPage extends Component {
 
   onBorrowalSubmit(e) {
     e.preventDefault();
-    this.setState({ sender : Session.get('user').username});
+    this.setState({ sender: Session.get('user').username });
     console.log("submited..", this.state);
     let request = {
       createdAt: new Date(),
@@ -390,7 +400,7 @@ export default class UserPage extends Component {
 
     TransactionsCollection.insert(
       {
-        receiver: request.receiver, sender: request.sender, itemId: request.itemId, itemname : request.itemName,
+        receiver: request.receiver, sender: request.sender, itemId: request.itemId, itemname: request.itemName,
         createdAt: request.createdAt, priority: request.priority, price: request.price,
         duration: request.duration, type: request.type, requeststatus: request.requeststatus
       }

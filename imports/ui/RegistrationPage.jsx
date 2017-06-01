@@ -174,5 +174,6 @@ export default class RegistrationPage extends Component {
     })
 
 
+
   }
 }

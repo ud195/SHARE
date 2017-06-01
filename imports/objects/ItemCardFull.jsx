@@ -44,7 +44,6 @@ else if(checkuser == Session.get('user').username)
     return (<Button onClick={direct}  icon='add to cart'  color='green' content='Borrow'></Button>);
 }
 
-
 export default class extends Component {
   constructor(props) {
     super(props);
@@ -113,7 +112,6 @@ redirectedit()
 }
 
 
-
   render() {
     const {active} = this.state;
     const { active1 } = this.state;
@@ -134,7 +132,7 @@ redirectedit()
               <Image src={item.imageUrl} size='medium' />
               <Card.Content>
                 <Card.Header>
-                  {item.name}
+                  {item.name.substring(0,20)+ ".."}
                 </Card.Header>
                 <Divider />
                 <span className='date'>
